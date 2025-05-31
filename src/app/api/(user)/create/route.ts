@@ -14,6 +14,17 @@ export async function POST(req: NextRequest) {
     //evt.data.email_addresses[0].email_address
     //evt.data.first_name
 
+    if (
+      !("email_addresses" in body) ||
+      !Array.isArray(body.email_addresses) ||
+      !body.email_addresses[0]
+    ) {
+      return NextResponse.json(
+        { message: "Payload do webhook não contém email_addresses" },
+        { status: 400 }
+      );
+    }
+
     const userId = body.id;
     const email = body.email_addresses[0].email_address;
     const name = body.first_name;
@@ -35,7 +46,7 @@ export async function POST(req: NextRequest) {
       data: {
         clerkId: userId,
         name,
-        email
+        email,
       },
     });
 
