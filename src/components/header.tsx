@@ -33,11 +33,11 @@ const navigation = [
   // { name: "Reports", href: "#", current: false },
 ];
 
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+// const userNavigation = [
+//   { name: "Your Profile", href: "#" },
+//   { name: "Settings", href: "#" },
+//   { name: "Sign out", href: "#" },
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -49,7 +49,7 @@ export default async function Header() {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="h-16 z-100">
         <Disclosure as="nav" className="bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
@@ -63,7 +63,7 @@ export default async function Header() {
                     height={200}
                   />
                 </div>
-                <div className="hidden md:block">
+                {/* <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
                       <a
@@ -81,7 +81,7 @@ export default async function Header() {
                       </a>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
@@ -163,11 +163,12 @@ export default async function Header() {
             <div className="border-t border-gray-700 pt-4 pb-3">
               <div className="flex items-center px-5">
                 <div className="shrink-0">
-                  <img
-                    alt=""
+                  <Image
+                    alt="userImage"
+                    width={200}
+                    height={200}
                     src={user?.imageUrl}
-                    className="size-10 rounded-full"
-                  />
+                    className="size-10 rounded-full" />
                 </div>
                 <div className="ml-3">
                   <div className="text-base/5 font-medium text-white">
@@ -186,7 +187,7 @@ export default async function Header() {
                   <BellIcon aria-hidden="true" className="size-6" />
                 </button>
               </div>
-              <div className="mt-3 space-y-1 px-2">
+              {/* <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item) => (
                   <DisclosureButton
                     key={item.name}
@@ -197,7 +198,7 @@ export default async function Header() {
                     {item.name}
                   </DisclosureButton>
                 ))}
-              </div>
+              </div> */}
             </div>
           </DisclosurePanel>
         </Disclosure>
