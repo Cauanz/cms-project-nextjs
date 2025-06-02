@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 //* NOTA: ELE VAI CHAMAR QUALQUER ROTA DE API COM O WEBHOOK, MAS ELE TEM QUE CONTER ESSE VERIFYWEBHOOK PARA PEGAR O PAYLOAD CORRETO (NÃO PRECISAR SER AQUELA ROTA WEBHOOKS/CLERK) SE VOCE QUISER PODE SER A ROTA DE CRIAÇÃO
 
+//* CREATE USER / CLERK AUTH
 export async function POST(req: NextRequest) {
   try {
     const evt = await verifyWebhook(req);
@@ -58,3 +59,9 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+//* GET USER
+
+//* UPDATE USER
+
+//* DELETE USER

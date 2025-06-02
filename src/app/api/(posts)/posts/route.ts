@@ -1,10 +1,10 @@
-// import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // ROTAS RELACIONADAS AOS POSTS, CREATE, UPDATE, DELETE ETC...
-// import { auth } from "@clerk/nextjs/server";
 
+//* CREATE POST
 export async function POST(req: NextRequest) {
   const body = await req.json();
   try {
@@ -26,18 +26,9 @@ export async function POST(req: NextRequest) {
       }
     })
 
-
-    const userPosts = await prisma.post.findMany({
-      where: { authorId: user.id }
-    });
-
-    console.log(title, content, authorId, user);
-    console.log("Posts do user:", userPosts);
-
-    //TODO - REMOVER PARTE DOS USERPOSTS (ERA TESTE PARA VER COMO PEGAR OS POSTS DO USER), E TERMINAR ISSO / FAZER O PRÓXIMO, DE PEGAR POSTS ETC..
-
+    revalidatePath("/")
     return NextResponse.json(
-      { message: "Post criado com sucesso" },
+      { message: "Post criado com sucesso", newPost },
       { status: 200 }
     );
   } catch (error) {
@@ -48,4 +39,95 @@ export async function POST(req: NextRequest) {
   }
 }
 
+//* GET POSTS
+export async function GET() {
+
+  try {
+    
+    const posts = await prisma.post.findMany({
+      include: {
+        author: true,
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    if(!posts) {
+      return NextResponse.json(
+        { message: "Não há posts a serem recuperados" },
+        { status: 500 }
+      );
+    }
+
+
+    revalidatePath("/");
+    return NextResponse.json(
+      { posts },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Ocorreu um problema ao tentar recuperar os posts", error },
+      { status: 500 }
+    );
+  }
+
+}
+
+//* UPDATE POST
+export async function PUT(req: NextRequest){
+  const body = await req.json();
+  try {
+    
+    const { title, content, postId } = body;
+
+    const updatePost = await prisma.post.update({
+      where: {
+        id: postId
+      },
+      data: {
+        title,
+        content,
+      }
+    })
+
+    revalidatePath("/");
+    return NextResponse.json(
+      { message: "Post atualizado com sucesso", updatePost },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Ocorreu um problema ao tentar atualizar o post", error },
+      { status: 500 }
+    );
+  }
+
+}
+
+//*DELETE POST
+export async function DELETE(req: NextRequest) {
+  const body = await req.json();
+  try {
+    const { postId } = body;
+
+    const deletePost = await prisma.post.delete({
+      where: {
+        id: postId,
+      }
+    });
+
+    revalidatePath("/");
+    return NextResponse.json(
+      { message: "Post apagado com sucesso", deletePost },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Ocorreu um problema ao tentar apagar o post", error },
+      { status: 500 }
+    );
+  }
+}
 //TODO - O userID será aramazenado junto ao registro do user no DB, ache o jeito que vai fazer isso
