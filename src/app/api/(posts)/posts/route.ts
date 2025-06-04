@@ -107,27 +107,27 @@ export async function PUT(req: NextRequest){
 }
 
 //*DELETE POST
-export async function DELETE(req: NextRequest) {
-  const body = await req.json();
-  try {
-    const { postId } = body;
+  export async function DELETE(req: NextRequest) {
+    const body = await req.json();
+    try {
+      const { postId } = body;
 
-    const deletePost = await prisma.post.delete({
-      where: {
-        id: postId,
-      }
-    });
+      const deletePost = await prisma.post.delete({
+        where: {
+          id: postId,
+        }
+      });
 
-    revalidatePath("/");
-    return NextResponse.json(
-      { message: "Post apagado com sucesso", deletePost },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Ocorreu um problema ao tentar apagar o post", error },
-      { status: 500 }
-    );
+      revalidatePath("/");
+      return NextResponse.json(
+        { message: "Post apagado com sucesso", deletePost },
+        { status: 200 }
+      );
+    } catch (error) {
+      return NextResponse.json(
+        { message: "Ocorreu um problema ao tentar apagar o post", error },
+        { status: 500 }
+      );
+    }
   }
-}
 //TODO - O userID será aramazenado junto ao registro do user no DB, ache o jeito que vai fazer isso

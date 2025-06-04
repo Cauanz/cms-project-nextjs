@@ -1,28 +1,60 @@
-// import { verifyWebhook } from "@clerk/nextjs/webhooks";
-// import { NextRequest } from "next/server";
+import prisma from "@/lib/prisma";
+import { verifyWebhook } from "@clerk/nextjs/webhooks";
+import { NextRequest, NextResponse } from "next/server";
 
-// export async function POST(req: NextRequest) {
-//   try {
-//     const evt = await verifyWebhook(req);
+export async function POST(req: NextRequest) {
+  try {
+    const evt = await verifyWebhook(req);
+    const body = evt.data;
 
-//     const { id } = evt.data;
-//     const eventType = evt.type;
-//     console.log(
-//       `Received webhook with ID ${id} and event type of ${eventType}`
-//     );
-//     console.log("Webhook payload:", evt.data);
+    // evt.data.id;
+    //evt.data.email_addresses[0].email_address
+    //evt.data.first_name
 
-//     return new Response("Webhook received", { status: 200 });
+    if (
+      !("email_addresses" in body) ||
+      !Array.isArray(body.email_addresses) ||
+      !body.email_addresses[0]
+    ) {
+      return NextResponse.json(
+        { message: "Payload do webhook não contém email_addresses" },
+        { status: 400 }
+      );
+    }
 
-//     if(evt.type === "user.created" || evt.type === "session.created") {
-//       console.log("UserId:", evt.data.id);
-//     }
+    const userId = body.id;
+    const email = body.email_addresses[0].email_address;
+    const name = body.first_name;
 
-//   } catch (err) {
-//     console.error("Error verifying webhook:", err);
-//     return new Response("Error verifying webhook", { status: 400 });
-//   }
-// }
+    console.log(userId, email, name);
+
+    const existingUser = await prisma.user.findUnique({
+      where: { clerkId: userId },
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "Usuário já existe" },
+        { status: 200 }
+      );
+    }
+
+    const user = await prisma.user.create({
+      data: {
+        clerkId: userId,
+        name,
+        email,
+      },
+    });
+
+    return NextResponse.json({ message: "Usuário criado com sucesso", user });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Erro ao criar um novo usuário", error },
+      { status: 500 }
+    );
+  }
+}
 
 
 //* EXEMPLO PAYLOAD ENVIADO EVENTO USER.CREATED:
