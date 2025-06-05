@@ -37,6 +37,24 @@ export default function Posts() {
       }
   }
 
+  const handleDelete = async (postId: string) => {
+    //TODO TERMINAR DE REFATORAR FUNÇÃO DE DELETAR PARA USAR PARAMS E NÃO BODY (PUT CONTINUA USANDO BODY) E TERMINAR ESSA FUNÇÃO
+    //! FUNÇÃO NÃO TESTADA
+    const res = await fetch(`/api/posts?postId=${postId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (res.ok) {
+      setShowForm(false);
+      form.reset();
+
+      fetch("/api/posts")
+        .then((res) => res.json())
+        .then((data) => setPosts(data.posts));
+    }
+  }
+
   return (
     <>
       <Sidebar />
@@ -44,7 +62,7 @@ export default function Posts() {
         <div className="flex justify-end p-6">
           <button
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow transition-colors cursor-pointer"
           >
             Novo Post
           </button>
@@ -62,10 +80,7 @@ export default function Posts() {
               <h3 className="text-lg font-bold mb-4 text-gray-900">
                 Criar novo post
               </h3>
-              <form
-                onSubmit={(e) => handleSubmit(e)}
-                className="space-y-4"
-              >
+              <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
                 <input
                   name="title"
                   type="text"
@@ -100,6 +115,18 @@ export default function Posts() {
                 {post.title}
               </h2>
               <p className="text-gray-600">{post.content}</p>
+
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm cursor-pointer"
+                  onClick={() => handleDelete(post.id)}
+                >
+                  Apagar
+                </button>
+                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm cursor-pointer">
+                  Editar
+                </button>
+              </div>
             </div>
           ))}
         </div>

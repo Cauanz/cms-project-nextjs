@@ -11,22 +11,25 @@ export async function POST(req: NextRequest) {
     const { title, content, authorId } = body;
 
     const user = await prisma.user.findUnique({
-      where: { clerkId: authorId }
-    })
+      where: { clerkId: authorId },
+    });
 
-    if(!user) {
-      return NextResponse.json({ message: "User não encontrado"}, { status: 500});
+    if (!user) {
+      return NextResponse.json(
+        { message: "User não encontrado" },
+        { status: 500 }
+      );
     }
 
     const newPost = await prisma.post.create({
       data: {
         title,
         content,
-        authorId: user.id
-      }
-    })
+        authorId: user.id,
+      },
+    });
 
-    revalidatePath("/")
+    revalidatePath("/");
     return NextResponse.json(
       { message: "Post criado com sucesso", newPost },
       { status: 200 }
@@ -41,56 +44,48 @@ export async function POST(req: NextRequest) {
 
 //* GET POSTS
 export async function GET() {
-
   try {
-    
     const posts = await prisma.post.findMany({
       include: {
         author: true,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
-    })
+        createdAt: "desc",
+      },
+    });
 
-    if(!posts) {
+    if (!posts) {
       return NextResponse.json(
         { message: "Não há posts a serem recuperados" },
         { status: 500 }
       );
     }
 
-
     revalidatePath("/");
-    return NextResponse.json(
-      { posts },
-      { status: 200 }
-    );
+    return NextResponse.json({ posts }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Ocorreu um problema ao tentar recuperar os posts", error },
       { status: 500 }
     );
   }
-
 }
 
 //* UPDATE POST
-export async function PUT(req: NextRequest){
+export async function PUT(req: NextRequest) {
   const body = await req.json();
   try {
-    
     const { title, content, postId } = body;
 
     const updatePost = await prisma.post.update({
       where: {
-        id: postId
+        id: postId,
       },
       data: {
         title,
         content,
-      }
-    })
+      },
+    });
 
     revalidatePath("/");
     return NextResponse.json(
@@ -103,31 +98,39 @@ export async function PUT(req: NextRequest){
       { status: 500 }
     );
   }
-
 }
 
 //*DELETE POST
-  export async function DELETE(req: NextRequest) {
-    const body = await req.json();
-    try {
-      const { postId } = body;
+export async function DELETE(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  try {
+    const postId = searchParams.get("postId");
 
-      const deletePost = await prisma.post.delete({
-        where: {
-          id: postId,
-        }
-      });
-
-      revalidatePath("/");
+    if (!postId) {
       return NextResponse.json(
-        { message: "Post apagado com sucesso", deletePost },
-        { status: 200 }
-      );
-    } catch (error) {
-      return NextResponse.json(
-        { message: "Ocorreu um problema ao tentar apagar o post", error },
+        {
+          message: "Post Id não informado ou encontrado",
+        },
         { status: 500 }
       );
     }
+
+    const deletePost = await prisma.post.delete({
+      where: {
+        id: postId,
+      },
+    });
+
+    revalidatePath("/");
+    return NextResponse.json(
+      { message: "Post apagado com sucesso", deletePost },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Ocorreu um problema ao tentar apagar o post", error },
+      { status: 500 }
+    );
   }
+}
 //TODO - O userID será aramazenado junto ao registro do user no DB, ache o jeito que vai fazer isso
