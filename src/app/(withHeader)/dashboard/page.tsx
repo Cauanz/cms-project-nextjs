@@ -2,15 +2,21 @@
 import Sidebar from "@/components/sidebar";
 import { useEffect, useState } from "react";
 
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+}
+
 export default function Dashboard() {
+  const [posts, setPosts] = useState([]);
 
-    const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-      fetch("/api/posts")
+  useEffect(() => {
+    fetch("/api/posts")
       .then((res) => res.json())
-        .then((data) => setPosts(data.posts));
-      }, []);
+      .then((data) => setPosts(data.posts));
+  }, []);
 
   return (
     <>
@@ -29,7 +35,7 @@ export default function Dashboard() {
         <section>
           <div>
             <p>Posts:</p>
-            {posts.map((post) => (
+            {posts.map((post: Post) => (
               <div
                 key={post.id}
                 className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border border-gray-100"

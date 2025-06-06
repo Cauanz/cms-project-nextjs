@@ -18,6 +18,7 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { currentUser } from "@clerk/nextjs/server";
+import { usePathname } from "next/navigation";
 
 // const user = {
 //   name: "Tom Cook",
@@ -26,9 +27,9 @@ import { currentUser } from "@clerk/nextjs/server";
 //     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 // };
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Posts", href: "#", current: false },
-  { name: "Main Page", href: "#", current: false },
+  { name: "Main Page", href: "/", current: false },
+  { name: "Dashboard", href: "/dashboard", current: true },
+  // { name: "Posts", href: "#", current: false },
   // { name: "Calendar", href: "#", current: false },
   // { name: "Reports", href: "#", current: false },
 ];
@@ -63,7 +64,7 @@ export default async function Header() {
                     height={200}
                   />
                 </div>
-                {/* <div className="hidden md:block">
+                <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
                       <a
@@ -81,7 +82,7 @@ export default async function Header() {
                       </a>
                     ))}
                   </div>
-                </div> */}
+                </div>
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
@@ -167,7 +168,7 @@ export default async function Header() {
                     alt="userImage"
                     width={200}
                     height={200}
-                    src={user?.imageUrl}
+                    src={user?.imageUrl || ""}
                     className="size-10 rounded-full" />
                 </div>
                 <div className="ml-3">

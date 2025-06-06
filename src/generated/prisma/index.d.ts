@@ -1955,14 +1955,25 @@ export namespace Prisma {
 
   export type AggregatePost = {
     _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
+  }
+
+  export type PostAvgAggregateOutputType = {
+    likes: number | null
+  }
+
+  export type PostSumAggregateOutputType = {
+    likes: number | null
   }
 
   export type PostMinAggregateOutputType = {
     id: string | null
     title: string | null
     content: string | null
+    likes: number | null
     published: boolean | null
     authorId: string | null
     createdAt: Date | null
@@ -1973,6 +1984,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     content: string | null
+    likes: number | null
     published: boolean | null
     authorId: string | null
     createdAt: Date | null
@@ -1983,6 +1995,7 @@ export namespace Prisma {
     id: number
     title: number
     content: number
+    likes: number
     published: number
     authorId: number
     createdAt: number
@@ -1991,10 +2004,19 @@ export namespace Prisma {
   }
 
 
+  export type PostAvgAggregateInputType = {
+    likes?: true
+  }
+
+  export type PostSumAggregateInputType = {
+    likes?: true
+  }
+
   export type PostMinAggregateInputType = {
     id?: true
     title?: true
     content?: true
+    likes?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2005,6 +2027,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
+    likes?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2015,6 +2038,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
+    likes?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2060,6 +2084,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: PostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: PostMinAggregateInputType
@@ -2090,6 +2126,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PostCountAggregateInputType | true
+    _avg?: PostAvgAggregateInputType
+    _sum?: PostSumAggregateInputType
     _min?: PostMinAggregateInputType
     _max?: PostMaxAggregateInputType
   }
@@ -2098,11 +2136,14 @@ export namespace Prisma {
     id: string
     title: string | null
     content: string | null
+    likes: number | null
     published: boolean | null
     authorId: string | null
     createdAt: Date
     updatedAt: Date
     _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
   }
@@ -2125,6 +2166,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    likes?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
@@ -2138,13 +2180,14 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    likes?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "published" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "likes" | "published" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Post$authorArgs<ExtArgs>
   }
@@ -2158,6 +2201,7 @@ export namespace Prisma {
       id: string
       title: string | null
       content: string | null
+      likes: number | null
       published: boolean | null
       authorId: string | null
       createdAt: Date
@@ -2558,6 +2602,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
+    readonly likes: FieldRef<"Post", 'Int'>
     readonly published: FieldRef<"Post", 'Boolean'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
@@ -2988,6 +3033,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     content: 'content',
+    likes: 'likes',
     published: 'published',
     authorId: 'authorId',
     createdAt: 'createdAt',
@@ -3047,13 +3093,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -3064,6 +3103,27 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -3132,6 +3192,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringNullableFilter<"Post"> | string | null
     content?: StringNullableFilter<"Post"> | string | null
+    likes?: IntNullableFilter<"Post"> | number | null
     published?: BoolNullableFilter<"Post"> | boolean | null
     authorId?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -3143,6 +3204,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    likes?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -3157,6 +3219,7 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringNullableFilter<"Post"> | string | null
     content?: StringNullableFilter<"Post"> | string | null
+    likes?: IntNullableFilter<"Post"> | number | null
     published?: BoolNullableFilter<"Post"> | boolean | null
     authorId?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -3168,13 +3231,16 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    likes?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
+    _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
     _min?: PostMinOrderByAggregateInput
+    _sum?: PostSumOrderByAggregateInput
   }
 
   export type PostScalarWhereWithAggregatesInput = {
@@ -3184,6 +3250,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Post"> | string
     title?: StringNullableWithAggregatesFilter<"Post"> | string | null
     content?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    likes?: IntNullableWithAggregatesFilter<"Post"> | number | null
     published?: BoolNullableWithAggregatesFilter<"Post"> | boolean | null
     authorId?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
@@ -3250,6 +3317,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     content?: string | null
+    likes?: number | null
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3260,6 +3328,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     content?: string | null
+    likes?: number | null
     published?: boolean | null
     authorId?: string | null
     createdAt?: Date | string
@@ -3269,6 +3338,7 @@ export namespace Prisma {
   export type PostUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3278,6 +3348,7 @@ export namespace Prisma {
   export type PostUncheckedUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     authorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3288,6 +3359,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     content?: string | null
+    likes?: number | null
     published?: boolean | null
     authorId?: string | null
     createdAt?: Date | string
@@ -3297,6 +3369,7 @@ export namespace Prisma {
   export type PostUpdateManyMutationInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3305,6 +3378,7 @@ export namespace Prisma {
   export type PostUncheckedUpdateManyInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     authorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3438,6 +3512,18 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -3453,16 +3539,22 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    likes?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
+  export type PostAvgOrderByAggregateInput = {
+    likes?: SortOrder
+  }
+
   export type PostMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    likes?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -3473,10 +3565,32 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    likes?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type PostSumOrderByAggregateInput = {
+    likes?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -3543,6 +3657,15 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+    unset?: boolean
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -3678,6 +3801,35 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
@@ -3691,6 +3843,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     content?: string | null
+    likes?: number | null
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3700,6 +3853,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     content?: string | null
+    likes?: number | null
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3737,6 +3891,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringNullableFilter<"Post"> | string | null
     content?: StringNullableFilter<"Post"> | string | null
+    likes?: IntNullableFilter<"Post"> | number | null
     published?: BoolNullableFilter<"Post"> | boolean | null
     authorId?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -3793,6 +3948,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     content?: string | null
+    likes?: number | null
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3801,6 +3957,7 @@ export namespace Prisma {
   export type PostUpdateWithoutAuthorInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3809,6 +3966,7 @@ export namespace Prisma {
   export type PostUncheckedUpdateWithoutAuthorInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3817,6 +3975,7 @@ export namespace Prisma {
   export type PostUncheckedUpdateManyWithoutAuthorInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: NullableIntFieldUpdateOperationsInput | number | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

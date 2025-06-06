@@ -77,6 +77,13 @@ export async function PUT(req: NextRequest) {
   try {
     const { title, content, postId } = body;
 
+    if(!postId) {
+      return NextResponse.json(
+        { message: "PostId não encontrado no payload" },
+        { status: 500 }
+      );
+    }
+
     const updatePost = await prisma.post.update({
       where: {
         id: postId,
