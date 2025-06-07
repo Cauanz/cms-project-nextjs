@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/posts");
     return NextResponse.json(
       { message: "Post criado com sucesso", newPost },
       { status: 200 }
@@ -43,16 +43,32 @@ export async function POST(req: NextRequest) {
 }
 
 //* GET POSTS
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
   try {
-    const posts = await prisma.post.findMany({
-      include: {
-        author: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const clerkId = searchParams.get("clerkId");
+    console.log(clerkId)
+
+    let posts: object[];
+    if (clerkId) {
+      const user = await prisma.user.findUnique({ where: { clerkId } });
+      if (!user) {
+        return NextResponse.json({ posts: [] }, { status: 200 });
+      }
+      posts = await prisma.post.findMany({
+        where: { authorId: user.id },
+        orderBy: { createdAt: "desc" },
+      });
+    } else {
+      posts = await prisma.post.findMany({
+        include: {
+          author: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    }
 
     if (!posts) {
       return NextResponse.json(
@@ -77,7 +93,7 @@ export async function PUT(req: NextRequest) {
   try {
     const { title, content, postId } = body;
 
-    if(!postId) {
+    if (!postId) {
       return NextResponse.json(
         { message: "PostId não encontrado no payload" },
         { status: 500 }

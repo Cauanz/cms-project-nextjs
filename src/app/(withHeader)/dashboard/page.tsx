@@ -1,5 +1,6 @@
 "use client";
 import Sidebar from "@/components/sidebar";
+import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 
 interface Post {
@@ -11,12 +12,13 @@ interface Post {
 export default function Dashboard() {
   const [posts, setPosts] = useState([]);
 
+  const { userId } = useAuth();
 
   useEffect(() => {
-    fetch("/api/posts")
+    fetch(`/api/posts?clerkId=${userId}`)
       .then((res) => res.json())
       .then((data) => setPosts(data.posts));
-  }, []);
+  }, [userId]);
 
   return (
     <>

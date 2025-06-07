@@ -1,5 +1,7 @@
 "use client";
 
+import AlertComponent from "@/components/alertComponent";
+import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 
 interface Author {
@@ -12,12 +14,22 @@ interface Post {
   content: string;
   author: Author;
   createdAt: Date;
-  likes: number
+  likes: number;
 }
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  // const [likes, setLikes] = useState(0);
+  const [alertTitle, setAlertTittle] = useState("");
+  const [alertDescription, setAlertDescription] = useState("");
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+  const {
+    // isLoaded,
+    isSignedIn,
+    // userId,
+    // sessionId,
+    // getToken
+  } = useAuth();
 
   useEffect(() => {
     fetch("/api/posts")
@@ -26,35 +38,42 @@ export default function Home() {
   }, []);
 
   async function handleLike(postId: string, currentLikes: number) {
+    if (!isSignedIn) {
+      setIsAlertOpen(true);
+      setTimeout(() => {
+        setIsAlertOpen(false);
+      }, 4000);
+      setAlertTittle("Erro ao curtir postagem");
+      setAlertDescription(
+        "Voce deve estar logado para poder curtir uma postagem"
+      );
+      return;
+    }
 
     const res = await fetch("/api/likes", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ postId, like: currentLikes + 1 }),
-    })
+    });
 
     if (res.ok) {
       fetch("/api/posts")
         .then((res) => res.json())
         .then((data) => setPosts(data.posts));
     }
-      // .then((res) => res.json())
-      // .then((data) => {
-      //   setPosts((prevPosts) =>
-      //     prevPosts.map((post: Post) =>
-      //       post.id === postId
-      //         ? { ...post, likes: (post.likes || 0) + 1 }
-      //         : post
-      //     )
-      //   );
-      // });
   }
 
   return (
     <>
       <div className="content w-full h-dvh flex items-center justify-center">
         {/* <h1 className="text-5xl">HOME</h1> */}
-
+        {isAlertOpen && (
+          <AlertComponent
+            title={alertTitle}
+            description={alertDescription}
+            closeAlert={setIsAlertOpen}
+          />
+        )}
         <div className="feed flex flex-col gap-6 mt-12 w-full max-w-xl">
           {posts.length === 0 ? (
             <div className="text-center text-gray-400">
@@ -96,7 +115,10 @@ export default function Home() {
                       ? `${post.likes} curtidas`
                       : "0 curtidas"}
                   </span>
-                  <button className="hover:text-green-500 transition-colors cursor-pointer" onClick={() => handleLike(post.id, post.likes || 0)}>
+                  <button
+                    className="hover:text-green-500 transition-colors cursor-pointer"
+                    onClick={() => handleLike(post.id, post.likes || 0)}
+                  >
                     Curtir
                   </button>
                   <button className="hover:text-blue-500 transition-colors cursor-pointer">

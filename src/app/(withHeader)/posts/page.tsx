@@ -1,6 +1,6 @@
 "use client";
 import Sidebar from "@/components/sidebar";
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
 
 interface Post {
@@ -18,12 +18,14 @@ export default function Posts() {
   const [content, setContent] = useState("");
 
   const { user } = useUser();
+  
+  const { userId } = useAuth();
 
   useEffect(() => {
-    fetch("/api/posts")
+    fetch(`/api/posts?clerkId=${userId}`)
       .then((res) => res.json())
       .then((data) => setPosts(data.posts));
-  }, []);
+  }, [userId]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -42,7 +44,7 @@ export default function Posts() {
       setShowForm(false);
       form.reset();
 
-      fetch("/api/posts")
+      fetch(`/api/posts?clerkId=${userId}`)
         .then((res) => res.json())
         .then((data) => setPosts(data.posts));
     }
@@ -78,7 +80,7 @@ export default function Posts() {
     });
 
     if (res.ok) {
-      fetch("/api/posts")
+      fetch(`/api/posts?clerkId=${userId}`)
         .then((res) => res.json())
         .then((data) => setPosts(data.posts));
     }
