@@ -89,7 +89,7 @@ export default function Posts() {
   return (
     <>
       <Sidebar />
-      <div className="pl-64">
+      <div className="pt-16 sm:pl-64 w-full">
         <div className="flex justify-end p-6">
           <button
             onClick={() => setShowForm(true)}

@@ -1,9 +1,12 @@
+"use client";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
+  SignOutButton,
   SignUpButton,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 import Image from "next/image";
 
@@ -11,27 +14,17 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { currentUser } from "@clerk/nextjs/server";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-// const user = {
-//   name: "Tom Cook",
-//   email: "tom@example.com",
-//   imageUrl:
-//     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-// };
 const navigation = [
   { name: "Main Page", href: "/", current: false },
   { name: "Dashboard", href: "/dashboard", current: true },
-  // { name: "Posts", href: "#", current: false },
-  // { name: "Calendar", href: "#", current: false },
-  // { name: "Reports", href: "#", current: false },
+  { name: "Posts", href: "/posts", current: false },
+  // { name: "Log in", href: "#", current: false },
+  // { name: "Sign in", href: "#", current: false },
 ];
 
 // const userNavigation = [
@@ -40,29 +33,33 @@ const navigation = [
 //   { name: "Sign out", href: "#" },
 // ];
 
-function classNames(...classes) {
+//TODO - DAR UM JEITO DE NÃO DEIXAR AS OPÇÕES DASHBOARD E POSTS APARECEREM PARA USUÁRIOS NÃO LOGADOS/AUTENTICADOS
+
+function classNames(...classes: number[] | string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default async function Header() {
-
-  const user = await currentUser();
+export default function Header() {
+  const { user, isSignedIn } = useUser();
+  const path = usePathname();
 
   return (
     <>
-      <div className="h-16 z-100">
+      <div className="h-16 z-50 fixed top-0 left-0 w-full">
         <Disclosure as="nav" className="bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
-                  <Image
-                    alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                    className="size-8"
-                    width={200}
-                    height={200}
-                  />
+                  <Link href="/">
+                    <Image
+                      alt="Your Company"
+                      src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                      className="size-8"
+                      width={200}
+                      height={200}
+                    />
+                  </Link>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
@@ -70,9 +67,9 @@ export default async function Header() {
                       <a
                         key={item.name}
                         href={item.href}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={path === item.href ? "page" : undefined}
                         className={classNames(
-                          item.current
+                          path === item.href
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
@@ -142,6 +139,7 @@ export default async function Header() {
             </div>
           </div>
 
+          {/* MOBILE AREA */}
           <DisclosurePanel className="md:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
               {navigation.map((item) => (
@@ -149,9 +147,9 @@ export default async function Header() {
                   key={item.name}
                   as="a"
                   href={item.href}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={path === item.href ? "page" : undefined}
                   className={classNames(
-                    item.current
+                    path === item.href
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "block rounded-md px-3 py-2 text-base font-medium"
@@ -160,34 +158,57 @@ export default async function Header() {
                   {item.name}
                 </DisclosureButton>
               ))}
+              <SignedIn>
+                <SignOutButton>
+                  <button className="text-gray-300 cursor-pointer px-3">
+                    Log out
+                  </button>
+                </SignOutButton>
+              </SignedIn>
+              <SignedOut>
+                <SignInButton>
+                  <button className="text-gray-300 cursor-pointer px-3 block">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton>
+                  <button className="text-gray-300 cursor-pointer py-2 px-3 block">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
             </div>
             <div className="border-t border-gray-700 pt-4 pb-3">
-              <div className="flex items-center px-5">
-                <div className="shrink-0">
-                  <Image
-                    alt="userImage"
-                    width={200}
-                    height={200}
-                    src={user?.imageUrl || ""}
-                    className="size-10 rounded-full" />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base/5 font-medium text-white">
-                    {user?.firstName}
+              {isSignedIn && (
+                <div className="flex items-center px-5">
+                  <div className="shrink-0">
+                    <Image
+                      alt="userImage"
+                      width={200}
+                      height={200}
+                      src={user?.imageUrl || ""}
+                      className="size-10 rounded-full"
+                    />
                   </div>
-                  <div className="text-sm font-medium text-gray-400">
-                    {user?.emailAddresses[0].emailAddress}
+                  <div className="ml-3">
+                    <div className="text-base/5 font-medium text-white">
+                      {user?.firstName}
+                    </div>
+                    <div className="text-sm font-medium text-gray-400">
+                      {user?.emailAddresses[0].emailAddress}
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    className="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">View notifications</span>
+                    <BellIcon aria-hidden="true" className="size-6" />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon aria-hidden="true" className="size-6" />
-                </button>
-              </div>
+              )}
+
               {/* <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item) => (
                   <DisclosureButton
