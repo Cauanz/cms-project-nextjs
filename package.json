@@ -17,6 +17,7 @@
     "@sequelize/core": "^7.0.0-alpha.42",
     "antd": "^5.25.3",
     "bcrypt": "^6.0.0",
+    "gsap": "^3.13.0",
     "jsonwebtoken": "^9.0.2",
     "next": "15.3.2",
     "react": "^19.0.0",

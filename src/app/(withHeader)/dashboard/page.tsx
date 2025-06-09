@@ -7,6 +7,7 @@ interface Post {
   id: string;
   title: string;
   content: string;
+  likes: number
 }
 
 export default function Dashboard() {
@@ -19,6 +20,10 @@ export default function Dashboard() {
     fetch(`/api/posts?clerkId=${userId}`)
       .then((res) => res.json())
       .then((data) => setPosts(data.posts));
+
+      fetch(`/api/posts?clerkId=${userId}`)
+        .then((res) => res.json())
+        .then((data) => console.log(data.posts));
 
     fetch("/api/posts")
       .then((res) => res.json())
@@ -37,11 +42,14 @@ export default function Dashboard() {
           <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
             <p>Total Posts:{allposts.length}</p>
           </div>
+
+          <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
+            <p>Total Likes:{posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}</p>
+          </div>
         </div>
 
         <section>
           <div>
-            <p>Posts:</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
               {posts.map((post: Post) => (
                 <div
@@ -55,7 +63,6 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
-            {/* //TODO - Aba mostrando posts brevemente com data, views titulo etc... */}
           </div>
         </section>
       </main>

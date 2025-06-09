@@ -1,8 +1,12 @@
 "use client";
 
 import AlertComponent from "@/components/alertComponent";
+import LoadingPage from "@/components/LoadingPage";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import gsap from "gsap";
 
 interface Author {
   name: string;
@@ -22,6 +26,7 @@ export default function Home() {
   const [alertTitle, setAlertTittle] = useState("");
   const [alertDescription, setAlertDescription] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     // isLoaded,
@@ -35,6 +40,13 @@ export default function Home() {
     fetch("/api/posts")
       .then((res) => res.json())
       .then((data) => setPosts(data.posts));
+
+    //TODO - ISSO AQUI AINDA NÃO TEM EFEITO NENHUM SOBRE O SCROLL, TEMOS QUE ENTENDER MAIS
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+    ScrollSmoother.create({
+      smooth: 2,
+      effects: true
+    })
   }, []);
 
   async function handleLike(postId: string, currentLikes: number) {
@@ -63,9 +75,13 @@ export default function Home() {
     }
   }
 
+  if (isLoading) {
+    return <LoadingPage onFinish={() => setIsLoading(false)} />;
+  }
+
   return (
     <>
-      <div className="content w-full h-dvh flex items-center justify-center">
+      <div className="content w-full pt-16 flex items-center justify-center">
         {/* <h1 className="text-5xl">HOME</h1> */}
         {isAlertOpen && (
           <AlertComponent

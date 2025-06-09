@@ -19,12 +19,16 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-const navigation = [
+const navigation1 = [
   { name: "Main Page", href: "/", current: false },
   { name: "Dashboard", href: "/dashboard", current: true },
   { name: "Posts", href: "/posts", current: false },
   // { name: "Log in", href: "#", current: false },
   // { name: "Sign in", href: "#", current: false },
+];
+
+const navigation2 = [
+  { name: "Main Page", href: "/", current: false }
 ];
 
 // const userNavigation = [
@@ -33,8 +37,6 @@ const navigation = [
 //   { name: "Sign out", href: "#" },
 // ];
 
-//TODO - DAR UM JEITO DE NÃO DEIXAR AS OPÇÕES DASHBOARD E POSTS APARECEREM PARA USUÁRIOS NÃO LOGADOS/AUTENTICADOS
-
 function classNames(...classes: number[] | string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -42,6 +44,8 @@ function classNames(...classes: number[] | string[]) {
 export default function Header() {
   const { user, isSignedIn } = useUser();
   const path = usePathname();
+
+  const navigation = isSignedIn ? navigation1 : navigation2;
 
   return (
     <>

@@ -47,7 +47,6 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   try {
     const clerkId = searchParams.get("clerkId");
-    console.log(clerkId)
 
     let posts: object[];
     if (clerkId) {
