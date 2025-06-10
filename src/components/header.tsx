@@ -20,7 +20,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navigation1 = [
-  { name: "Main Page", href: "/", current: false },
+  { name: "Home", href: "/", current: false },
   { name: "Dashboard", href: "/dashboard", current: true },
   { name: "Posts", href: "/posts", current: false },
   // { name: "Log in", href: "#", current: false },
@@ -28,7 +28,7 @@ const navigation1 = [
 ];
 
 const navigation2 = [
-  { name: "Main Page", href: "/", current: false }
+  { name: "Home", href: "/", current: false }
 ];
 
 // const userNavigation = [
@@ -127,7 +127,7 @@ export default function Header() {
 
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon
@@ -156,7 +156,7 @@ export default function Header() {
                     path === item.href
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
+                    "block rounded-md px-3 py-2 text-base font-medium cursor-pointer"
                   )}
                 >
                   {item.name}
@@ -164,19 +164,19 @@ export default function Header() {
               ))}
               <SignedIn>
                 <SignOutButton>
-                  <button className="text-gray-300 cursor-pointer px-3">
+                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer px-3">
                     Log out
                   </button>
                 </SignOutButton>
               </SignedIn>
               <SignedOut>
                 <SignInButton>
-                  <button className="text-gray-300 cursor-pointer px-3 block">
+                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer px-3">
                     Sign In
                   </button>
                 </SignInButton>
                 <SignUpButton>
-                  <button className="text-gray-300 cursor-pointer py-2 px-3 block">
+                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer px-3">
                     Sign Up
                   </button>
                 </SignUpButton>

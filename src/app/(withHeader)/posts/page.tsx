@@ -1,12 +1,12 @@
 "use client";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/Sidebar";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
 
 interface Post {
-  id: string,
-  title: string,
-  content: string
+  id: string;
+  title: string;
+  content: string;
 }
 
 export default function Posts() {
@@ -18,7 +18,7 @@ export default function Posts() {
   const [content, setContent] = useState("");
 
   const { user } = useUser();
-  
+
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Posts() {
             onClick={() => setShowForm(true)}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow transition-colors cursor-pointer"
           >
-            Novo Post
+            New Post
           </button>
         </div>
         {showForm && (
@@ -109,19 +109,19 @@ export default function Posts() {
                 &times;
               </button>
               <h3 className="text-lg font-bold mb-4 text-gray-900">
-                Criar novo post
+                Create new post
               </h3>
               <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
                 <input
                   name="title"
                   type="text"
-                  placeholder="Título"
+                  placeholder="Tittle"
                   required
                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                 />
                 <textarea
                   name="content"
-                  placeholder="Conteúdo"
+                  placeholder="Content"
                   required
                   className="w-full border border-gray-300 rounded px-3 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                 />
@@ -129,7 +129,7 @@ export default function Posts() {
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors cursor-pointer"
                 >
-                  Criar
+                  Create
                 </button>
               </form>
             </div>
@@ -152,7 +152,7 @@ export default function Posts() {
                   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm cursor-pointer"
                   onClick={() => handleDelete(post.id)}
                 >
-                  Apagar
+                  Delete
                 </button>
                 <button
                   className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm cursor-pointer"
@@ -162,7 +162,7 @@ export default function Posts() {
                     setShowEditForm(true);
                   }}
                 >
-                  Editar
+                  Edit
                 </button>
                 {showEditForm && (
                   <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
@@ -175,7 +175,7 @@ export default function Posts() {
                         &times;
                       </button>
                       <h3 className="text-lg font-bold mb-4 text-gray-900">
-                        Editar Post: {post.title}
+                        Edit Post: {post.title}
                       </h3>
                       <form
                         onSubmit={(e) => handleEdit(e, post.id)}
@@ -202,7 +202,7 @@ export default function Posts() {
                           type="submit"
                           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors cursor-pointer"
                         >
-                          Concluir
+                          Finish
                         </button>
                       </form>
                     </div>

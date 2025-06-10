@@ -1,5 +1,5 @@
 "use client";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/Sidebar";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 
@@ -7,7 +7,7 @@ interface Post {
   id: string;
   title: string;
   content: string;
-  likes: number
+  likes: number;
 }
 
 export default function Dashboard() {
@@ -21,9 +21,9 @@ export default function Dashboard() {
       .then((res) => res.json())
       .then((data) => setPosts(data.posts));
 
-      fetch(`/api/posts?clerkId=${userId}`)
-        .then((res) => res.json())
-        .then((data) => console.log(data.posts));
+    fetch(`/api/posts?clerkId=${userId}`)
+      .then((res) => res.json())
+      .then((data) => console.log(data.posts));
 
     fetch("/api/posts")
       .then((res) => res.json())
@@ -44,7 +44,9 @@ export default function Dashboard() {
           </div>
 
           <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
-            <p>Total Likes:{posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}</p>
+            <p>
+              Total Likes:{posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}
+            </p>
           </div>
         </div>
 
@@ -69,5 +71,3 @@ export default function Dashboard() {
     </>
   );
 }
-
-//! FODA-SE A UI, A IDEIA É RESOLVER UM PROBLEMA, FOQUE NO BACKEND/API PRIMEIRO, DEIXE ESSA FRESCURA PARA DEPOIS, OU FAÇA O BÁSICO SÓ PARA TESTAR E TER UMA IDEIA USANDO CSS INLINE E TAGS HTML, OU NO INSOMNIA MESMO

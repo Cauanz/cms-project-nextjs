@@ -1,13 +1,9 @@
 "use client";
 
-import AlertComponent from "@/components/alertComponent";
+import AlertComponent from "@/components/AlertComponent";
 import LoadingPage from "@/components/LoadingPage";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-import gsap from "gsap";
-
 interface Author {
   name: string;
   id: string;
@@ -40,13 +36,6 @@ export default function Home() {
     fetch("/api/posts")
       .then((res) => res.json())
       .then((data) => setPosts(data.posts));
-
-    //TODO - ISSO AQUI AINDA NÃO TEM EFEITO NENHUM SOBRE O SCROLL, TEMOS QUE ENTENDER MAIS
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
-    ScrollSmoother.create({
-      smooth: 2,
-      effects: true
-    })
   }, []);
 
   async function handleLike(postId: string, currentLikes: number) {
@@ -79,10 +68,11 @@ export default function Home() {
     return <LoadingPage onFinish={() => setIsLoading(false)} />;
   }
 
+  //TODO - FUTURE TODO, MUDAR SISTEMA DE LIKES PARA USAR ID DO USUÁRIO PARA PERMITIR APENAS 1 LIKE DE CADA USER
+
   return (
     <>
       <div className="content w-full pt-16 flex items-center justify-center">
-        {/* <h1 className="text-5xl">HOME</h1> */}
         {isAlertOpen && (
           <AlertComponent
             title={alertTitle}
@@ -93,7 +83,7 @@ export default function Home() {
         <div className="feed flex flex-col gap-6 mt-12 w-full max-w-xl">
           {posts.length === 0 ? (
             <div className="text-center text-gray-400">
-              Nenhuma postagem encontrada.
+              No posts were found.
             </div>
           ) : (
             posts.map((post: Post) => (
@@ -135,13 +125,13 @@ export default function Home() {
                     className="hover:text-green-500 transition-colors cursor-pointer"
                     onClick={() => handleLike(post.id, post.likes || 0)}
                   >
-                    Curtir
+                    Like
                   </button>
                   <button className="hover:text-blue-500 transition-colors cursor-pointer">
-                    Comentar
+                    Comment
                   </button>
                   <button className="hover:text-yellow-500 transition-colors cursor-pointer">
-                    Compartilhar
+                    Share
                   </button>
                 </div>
               </div>

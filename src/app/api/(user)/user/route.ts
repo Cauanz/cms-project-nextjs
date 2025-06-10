@@ -1,8 +1,5 @@
-// import prisma from "@/lib/prisma";
 import prisma from "@/lib/prisma";
 import { clerkClient } from "@clerk/nextjs/server";
-// import { clerkClient } from "@clerk/nextjs/server";
-// import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -20,8 +17,6 @@ export async function POST(req: NextRequest) {
 
     const { name, email, password } = body;
     //PROVAVELMENTE A VERIFICAÇÃO PARA GARANTIR QUE TODOS OS CAMPOS ESTÃO AQUI SERIA NO FRONT
-
-    console.log(email, name, password);
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -56,14 +51,6 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-//EXISTE UMA FORMA DE CRIAR O USER NO CLERK POR AQUI, SEM WEBHOOK:
-/*
-    const client = await clerkClient();
-    const clerkUser = await client.users.createUser({
-      emailAddress: [email]
-    })
-*/
 
 //* GET USER
 export async function GET(req: NextRequest) {
