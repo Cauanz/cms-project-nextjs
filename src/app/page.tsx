@@ -35,7 +35,10 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/posts")
       .then((res) => res.json())
-      .then((data) => setPosts(data.posts));
+      .then((data) => {
+        setPosts(data.posts);
+        setIsLoading(false);
+      });
   }, []);
 
   async function handleLike(postId: string, currentLikes: number) {
@@ -65,10 +68,11 @@ export default function Home() {
   }
 
   if (isLoading) {
-    return <LoadingPage onFinish={() => setIsLoading(false)} />;
+    return <LoadingPage />;
   }
 
   //TODO - FUTURE TODO, MUDAR SISTEMA DE LIKES PARA USAR ID DO USUÁRIO PARA PERMITIR APENAS 1 LIKE DE CADA USER
+  //TODO TROCAR TELA DE LOADING POR CIRCULO BÁSICO E MENOS SMOOTH E MAIS RÁPIDO
 
   return (
     <>

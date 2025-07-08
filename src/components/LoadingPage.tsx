@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
 
-export default function LoadingPage({ onFinish }: { onFinish: () => void}) {
+export default function LoadingPage() {
   const loaderRef = useRef(null);
 
   gsap.registerPlugin(SplitText);
@@ -13,7 +13,7 @@ export default function LoadingPage({ onFinish }: { onFinish: () => void}) {
         gsap.to(loaderRef.current, {
           opacity: 0,
           duration: 0.5,
-          onComplete: onFinish
+          // onComplete: onFinish
         });
       },
     });
@@ -21,7 +21,7 @@ export default function LoadingPage({ onFinish }: { onFinish: () => void}) {
     tl.fromTo(
       loaderRef.current,
       { y: 0, opacity: 1},
-      { y: -5, duration: 1.5, delay: 1}
+      { y: -5, duration: 0.5, delay: 1}
     );
   }, []);
 
@@ -31,7 +31,7 @@ export default function LoadingPage({ onFinish }: { onFinish: () => void}) {
       {type: "chars"}
     );
     gsap.from(split.chars, {
-      duration: 1.5,
+      duration: 0.5,
       y: -100,
       autoAlpha: 0,
       stagger: 0.05

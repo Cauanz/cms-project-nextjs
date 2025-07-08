@@ -1,4 +1,5 @@
 "use client";
+import LoadingPage from "@/components/LoadingPage";
 import Sidebar from "@/components/Sidebar";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
@@ -13,6 +14,7 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -22,9 +24,13 @@ export default function Posts() {
   const { userId } = useAuth();
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`/api/posts?clerkId=${userId}`)
       .then((res) => res.json())
-      .then((data) => setPosts(data.posts));
+      .then((data) => {
+        setPosts(data.posts);
+        setIsLoading(false);
+      });
   }, [userId]);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -85,6 +91,10 @@ export default function Posts() {
         .then((data) => setPosts(data.posts));
     }
   };
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>

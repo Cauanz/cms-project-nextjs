@@ -56,9 +56,16 @@ export default function Header() {
               <div className="flex items-center">
                 <div className="shrink-0">
                   <Link href="/">
-                    <Image
+                    {/* <Image
                       alt="Your Company"
                       src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                      className="size-8"
+                      width={200}
+                      height={200}
+                    /> */}
+                    <Image
+                      alt="Logo blog"
+                      src="/logo-blog.png"
                       className="size-8"
                       width={200}
                       height={200}

@@ -1,4 +1,5 @@
 "use client";
+import LoadingPage from "@/components/LoadingPage";
 import Sidebar from "@/components/Sidebar";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
@@ -13,22 +14,42 @@ interface Post {
 export default function Dashboard() {
   const [posts, setPosts] = useState([]);
   const [allposts, setAllPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { userId } = useAuth();
 
   useEffect(() => {
-    fetch(`/api/posts?clerkId=${userId}`)
-      .then((res) => res.json())
-      .then((data) => setPosts(data.posts));
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const [res1, res2] = await Promise.all([
+          fetch(`/api/posts?clerkId=${userId}`),
+          fetch("/api/posts"),
+        ]);
+        const userPosts = await res1.json();
+        const posts = await res2.json();
 
-    fetch(`/api/posts?clerkId=${userId}`)
-      .then((res) => res.json())
-      .then((data) => console.log(data.posts));
+        setPosts(userPosts.posts);
+        setAllPosts(posts.posts);
+      } catch (error) {
+        console.log("An error occurred trying to get posts", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
 
-    fetch("/api/posts")
-      .then((res) => res.json())
-      .then((data) => setAllPosts(data.posts));
+    // fetch(`/api/posts?clerkId=${userId}`)
+    //   .then((res) => res.json())
+    //   .then((data) => setPosts(data.posts)); //posts: Array[{}]
+    // fetch("/api/posts")
+    //   .then((res) => res.json())
+    //   .then((data) => setAllPosts(data.posts)); //posts: Array[{}]
   }, [userId]);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>
