@@ -5,18 +5,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 //* NOTA: ELE VAI CHAMAR QUALQUER ROTA DE API COM O WEBHOOK, MAS ELE TEM QUE CONTER ESSE VERIFYWEBHOOK PARA PEGAR O PAYLOAD CORRETO (NÃO PRECISAR SER AQUELA ROTA WEBHOOKS/CLERK) SE VOCE QUISER PODE SER A ROTA DE CRIAÇÃO
 
+//! ACHO QUE ESSAS ROTAS NÃO USAM O CLERKID, MAS O USERID (OQUE NOS IMPEDE DE USAR ELAS PARA ENCONTRAR USUÁRIOS)
+
 //* CREATE USER / CLERK AUTH
 export async function POST(req: NextRequest) {
   const client = await clerkClient();
   try {
     const body = await req.json();
 
-    // evt.data.id;
+    //evt.data.id;
     //evt.data.email_addresses[0].email_address
     //evt.data.first_name
 
     const { name, email, password } = body;
-    //PROVAVELMENTE A VERIFICAÇÃO PARA GARANTIR QUE TODOS OS CAMPOS ESTÃO AQUI SERIA NO FRONT
+    //* PROVAVELMENTE A VERIFICAÇÃO PARA GARANTIR QUE TODOS OS CAMPOS ESTÃO AQUI SERIA NO FRONT
 
     const existingUser = await prisma.user.findUnique({
       where: { email },

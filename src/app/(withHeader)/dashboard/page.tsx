@@ -16,14 +16,14 @@ export default function Dashboard() {
   const [allposts, setAllPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { userId } = useAuth();
+  const { userId: clerkId } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
         const [res1, res2] = await Promise.all([
-          fetch(`/api/posts?clerkId=${userId}`),
+          fetch(`/api/posts?clerkId=${clerkId}`),
           fetch("/api/posts"),
         ]);
         const userPosts = await res1.json();
@@ -39,13 +39,13 @@ export default function Dashboard() {
     };
     fetchData();
 
-    // fetch(`/api/posts?clerkId=${userId}`)
+    // fetch(`/api/posts?clerkId=${clerkId}`)
     //   .then((res) => res.json())
     //   .then((data) => setPosts(data.posts)); //posts: Array[{}]
     // fetch("/api/posts")
     //   .then((res) => res.json())
     //   .then((data) => setAllPosts(data.posts)); //posts: Array[{}]
-  }, [userId]);
+  }, [clerkId]);
 
   if (isLoading) {
     return <LoadingPage />;

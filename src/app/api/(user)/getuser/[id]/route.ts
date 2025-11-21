@@ -4,5 +4,7 @@ import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest, NextResponse } from "next/server";
 
 
-//ROTA PARA ADMIN JÁ QUE NÃO É PARA OS USUÁRIOS PODEREM VER OS OUTROS USUÁRIOS
-//* GET USERS?
+//* GET USER
+export async function GET(req: NextRequest) {
+  //TODO - TERMINAR ESSA ROTA PARA PEGAR O USUÁRIO DO DB USANDO CLERKID E USAR PARA FUNÇÃO DE LIKES UNICOS
+}

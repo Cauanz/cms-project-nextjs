@@ -21,17 +21,17 @@ export default function Posts() {
 
   const { user } = useUser();
 
-  const { userId } = useAuth();
+  const { userId: clerkId } = useAuth();
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`/api/posts?clerkId=${userId}`)
+    fetch(`/api/posts?clerkId=${clerkId}`)
       .then((res) => res.json())
       .then((data) => {
         setPosts(data.posts);
         setIsLoading(false);
       });
-  }, [userId]);
+  }, [clerkId]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ export default function Posts() {
       setShowForm(false);
       form.reset();
 
-      fetch(`/api/posts?clerkId=${userId}`)
+      fetch(`/api/posts?clerkId=${clerkId}`)
         .then((res) => res.json())
         .then((data) => setPosts(data.posts));
     }
@@ -86,7 +86,7 @@ export default function Posts() {
     });
 
     if (res.ok) {
-      fetch(`/api/posts?clerkId=${userId}`)
+      fetch(`/api/posts?clerkId=${clerkId}`)
         .then((res) => res.json())
         .then((data) => setPosts(data.posts));
     }

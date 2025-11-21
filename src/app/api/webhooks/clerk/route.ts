@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const evt = await verifyWebhook(req);
     const body = evt.data;
 
-    // evt.data.id;
+    //evt.data.id;
     //evt.data.email_addresses[0].email_address
     //evt.data.first_name
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     const email = body.email_addresses[0].email_address;
     const name = body.first_name;
 
-    console.log(userId, email, name);
+    // console.log(userId, email, name);
 
     const existingUser = await prisma.user.findUnique({
       where: { clerkId: userId },

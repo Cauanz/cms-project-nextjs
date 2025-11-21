@@ -27,7 +27,7 @@ export default function Home() {
   const {
     // isLoaded,
     isSignedIn,
-    // userId,
+    userId: clerkId,
     // sessionId,
     // getToken
   } = useAuth();
@@ -39,7 +39,8 @@ export default function Home() {
         setPosts(data.posts);
         setIsLoading(false);
       });
-  }, []);
+
+    }, []);
 
   async function handleLike(postId: string, currentLikes: number) {
     if (!isSignedIn) {
@@ -53,6 +54,13 @@ export default function Home() {
       );
       return;
     }
+
+    const curUser = await fetch(`/api/user?userId=${clerkId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    });
+
+    console.log(curUser)
 
     const res = await fetch("/api/likes", {
       method: "PUT",
