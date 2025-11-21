@@ -74,6 +74,8 @@ export default function Home() {
   //TODO - FUTURE TODO, MUDAR SISTEMA DE LIKES PARA USAR ID DO USUÁRIO PARA PERMITIR APENAS 1 LIKE DE CADA USER
   //TODO TROCAR TELA DE LOADING POR CIRCULO BÁSICO E MENOS SMOOTH E MAIS RÁPIDO
 
+  //TODO - COMEÇAR A ENTENDER E PENSAR NO QUE PODE SER MELHORADO E QUAIS FEATURES A MAIS PODEM SER ADICIONADAS
+
   return (
     <>
       <div className="content w-full pt-16 flex items-center justify-center">
@@ -108,7 +110,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="text-lg font-medium text-gray-600">
+                <div className="text-lg font-medium text-gray-800 bg-amber-600">
                   {post.title}
                 </div>
                 <div className="text-gray-800">{post.content}</div>
