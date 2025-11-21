@@ -5,7 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PUT(req: NextRequest) {
   const body = await req.json();
   try {
-    const { like, postId } = body;
+    const { like, postId, userId } = body;
+
+    //TODO - RECEBER APENAS POSTID, RECUPERAR QUANTIDADE DE LIKES AQUI
+    //TODO - VERIFICAR SE USER JÁ DEU LIKE, SE SIM, DECREMENTA, SE NÃO, INCREMENTA
+
 
     if(!postId) {
       return NextResponse.json(
@@ -14,12 +18,20 @@ export async function PUT(req: NextRequest) {
       );
     }
 
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId
+      }
+    })
+
+    console.log(post)
+
     const updatePost = await prisma.post.update({
       where: {
         id: postId,
       },
       data: {
-        likes: like
+        likes: post?.liked_by.includes(userId) ? post?.likes += 1: post?.likes -= 1
       },
     });
 

@@ -40,7 +40,7 @@ export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -72,13 +72,6 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
-
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
 
 /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -193,8 +186,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.1
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.19.0
+   * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
    */
   export type PrismaVersion = {
     client: string
@@ -207,6 +200,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -778,16 +772,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -829,10 +831,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -872,25 +879,6 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
-
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -1996,6 +1984,7 @@ export namespace Prisma {
     title: number
     content: number
     likes: number
+    liked_by: number
     published: number
     authorId: number
     createdAt: number
@@ -2039,6 +2028,7 @@ export namespace Prisma {
     title?: true
     content?: true
     likes?: true
+    liked_by?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2137,6 +2127,7 @@ export namespace Prisma {
     title: string | null
     content: string | null
     likes: number | null
+    liked_by: string[]
     published: boolean | null
     authorId: string | null
     createdAt: Date
@@ -2167,6 +2158,7 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     likes?: boolean
+    liked_by?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
@@ -2181,13 +2173,14 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     likes?: boolean
+    liked_by?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "likes" | "published" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "likes" | "liked_by" | "published" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Post$authorArgs<ExtArgs>
   }
@@ -2202,6 +2195,7 @@ export namespace Prisma {
       title: string | null
       content: string | null
       likes: number | null
+      liked_by: string[]
       published: boolean | null
       authorId: string | null
       createdAt: Date
@@ -2603,6 +2597,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
     readonly likes: FieldRef<"Post", 'Int'>
+    readonly liked_by: FieldRef<"Post", 'String[]'>
     readonly published: FieldRef<"Post", 'Boolean'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
@@ -3034,6 +3029,7 @@ export namespace Prisma {
     title: 'title',
     content: 'content',
     likes: 'likes',
+    liked_by: 'liked_by',
     published: 'published',
     authorId: 'authorId',
     createdAt: 'createdAt',
@@ -3193,6 +3189,7 @@ export namespace Prisma {
     title?: StringNullableFilter<"Post"> | string | null
     content?: StringNullableFilter<"Post"> | string | null
     likes?: IntNullableFilter<"Post"> | number | null
+    liked_by?: StringNullableListFilter<"Post">
     published?: BoolNullableFilter<"Post"> | boolean | null
     authorId?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -3205,6 +3202,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     likes?: SortOrder
+    liked_by?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -3220,6 +3218,7 @@ export namespace Prisma {
     title?: StringNullableFilter<"Post"> | string | null
     content?: StringNullableFilter<"Post"> | string | null
     likes?: IntNullableFilter<"Post"> | number | null
+    liked_by?: StringNullableListFilter<"Post">
     published?: BoolNullableFilter<"Post"> | boolean | null
     authorId?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -3232,6 +3231,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     likes?: SortOrder
+    liked_by?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -3251,6 +3251,7 @@ export namespace Prisma {
     title?: StringNullableWithAggregatesFilter<"Post"> | string | null
     content?: StringNullableWithAggregatesFilter<"Post"> | string | null
     likes?: IntNullableWithAggregatesFilter<"Post"> | number | null
+    liked_by?: StringNullableListFilter<"Post">
     published?: BoolNullableWithAggregatesFilter<"Post"> | boolean | null
     authorId?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
@@ -3318,6 +3319,7 @@ export namespace Prisma {
     title?: string | null
     content?: string | null
     likes?: number | null
+    liked_by?: PostCreateliked_byInput | string[]
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3329,6 +3331,7 @@ export namespace Prisma {
     title?: string | null
     content?: string | null
     likes?: number | null
+    liked_by?: PostCreateliked_byInput | string[]
     published?: boolean | null
     authorId?: string | null
     createdAt?: Date | string
@@ -3339,6 +3342,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3349,6 +3353,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     authorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3360,6 +3365,7 @@ export namespace Prisma {
     title?: string | null
     content?: string | null
     likes?: number | null
+    liked_by?: PostCreateliked_byInput | string[]
     published?: boolean | null
     authorId?: string | null
     createdAt?: Date | string
@@ -3370,6 +3376,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3379,6 +3386,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     authorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3524,6 +3532,14 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -3540,6 +3556,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     likes?: SortOrder
+    liked_by?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -3653,6 +3670,10 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
+  export type PostCreateliked_byInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutPostsInput = {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
@@ -3666,6 +3687,11 @@ export namespace Prisma {
     multiply?: number
     divide?: number
     unset?: boolean
+  }
+
+  export type PostUpdateliked_byInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -3844,6 +3870,7 @@ export namespace Prisma {
     title?: string | null
     content?: string | null
     likes?: number | null
+    liked_by?: PostCreateliked_byInput | string[]
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3854,6 +3881,7 @@ export namespace Prisma {
     title?: string | null
     content?: string | null
     likes?: number | null
+    liked_by?: PostCreateliked_byInput | string[]
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3892,6 +3920,7 @@ export namespace Prisma {
     title?: StringNullableFilter<"Post"> | string | null
     content?: StringNullableFilter<"Post"> | string | null
     likes?: IntNullableFilter<"Post"> | number | null
+    liked_by?: StringNullableListFilter<"Post">
     published?: BoolNullableFilter<"Post"> | boolean | null
     authorId?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -3949,6 +3978,7 @@ export namespace Prisma {
     title?: string | null
     content?: string | null
     likes?: number | null
+    liked_by?: PostCreateliked_byInput | string[]
     published?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3958,6 +3988,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3967,6 +3998,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3976,6 +4008,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     likes?: NullableIntFieldUpdateOperationsInput | number | null
+    liked_by?: PostUpdateliked_byInput | string[]
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
