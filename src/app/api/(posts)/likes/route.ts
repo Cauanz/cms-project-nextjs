@@ -24,7 +24,7 @@ export async function PUT(req: NextRequest) {
       }
     })
 
-    console.log(post)
+    // console.log(post)
 
     const updatePost = await prisma.post.update({
       where: {

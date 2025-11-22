@@ -55,12 +55,13 @@ export default function Home() {
       return;
     }
 
-    const curUser = await fetch(`/api/user?userId=${clerkId}`, {
+    const curUser = await fetch(`/api/user/${clerkId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     });
 
-    console.log(curUser)
+    console.log( await curUser.json())
+    //* RESOLVIDO, USUÁRIO SENDO RECEBIDO, AGORA VOLTAMOS A FEATURE DE LIKE (P.S. PARA ACESSAR O OBJETO DE UMA RESPONSE PRECISA DO .JSON())
 
     const res = await fetch("/api/likes", {
       method: "PUT",
