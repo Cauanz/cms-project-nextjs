@@ -5,13 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PUT(req: NextRequest) {
   const body = await req.json();
   try {
-    const { like, postId } = body;
+    const { postId, userId }: { postId: string; userId: string } = body;
 
-    //TODO - RECEBER APENAS POSTID, RECUPERAR QUANTIDADE DE LIKES AQUI
-    //TODO - VERIFICAR SE USER JÁ DEU LIKE, SE SIM, DECREMENTA, SE NÃO, INCREMENTA
-
-
-    if(!postId) {
+    if (!postId) {
       return NextResponse.json(
         { message: "postId ou like inválido" },
         { status: 400 }
@@ -20,26 +16,53 @@ export async function PUT(req: NextRequest) {
 
     const post = await prisma.post.findUnique({
       where: {
-        id: postId
-      }
-    })
-
-    // console.log(post)
-
-    const updatePost = await prisma.post.update({
-      where: {
         id: postId,
-      },
-      data: {
-        likes: like
-        // likes: post?.liked_by.includes(userId) ? post?.likes += 1: post?.likes -= 1
       },
     });
 
-    return NextResponse.json(
-      { message: "Likes atualizado com sucesso", updatePost },
-      { status: 200 }
-    );
+    if (post?.liked_by.includes(userId)) {
+      const updatedLikedBy = post.liked_by.filter((id) => id !== userId);
+
+      const updatePost = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          likes: {
+            decrement: 1,
+          },
+          liked_by: updatedLikedBy,
+        },
+      });
+
+      return NextResponse.json(
+        { message: "Likes atualizado com sucesso", updatePost },
+        { status: 200 }
+      );
+    } else {
+
+      const updatedLikedBy = [...(post?.liked_by ?? []), userId];
+
+      const updatePost = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          likes: {
+            increment: 1,
+          },
+          liked_by: {
+            set: updatedLikedBy,
+          },
+        },
+      });
+
+      return NextResponse.json(
+        { message: "Likes atualizado com sucesso", updatePost },
+        { status: 200 }
+      );
+    }
+
   } catch (error) {
     return NextResponse.json(
       { message: "Erro ao atualizar likes", error },

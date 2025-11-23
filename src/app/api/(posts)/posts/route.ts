@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
       data: {
         title,
         content,
+        liked_by: [],
         authorId: user.id,
       },
     });

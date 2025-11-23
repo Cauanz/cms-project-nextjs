@@ -42,7 +42,7 @@ export default function Home() {
 
     }, []);
 
-  async function handleLike(postId: string, currentLikes: number) {
+  async function handleLike(postId: string) {
     if (!isSignedIn) {
       setIsAlertOpen(true);
       setTimeout(() => {
@@ -50,23 +50,21 @@ export default function Home() {
       }, 4000);
       setAlertTittle("Erro ao curtir postagem");
       setAlertDescription(
-        "Voce deve estar logado para poder curtir uma postagem"
+        "Voce deve estar logado para curtir uma postagem"
       );
       return;
     }
 
-    const curUser = await fetch(`/api/user/${clerkId}`, {
+    const currentUser = await fetch(`/api/user/${clerkId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     });
-
-    console.log( await curUser.json())
-    //* RESOLVIDO, USUÁRIO SENDO RECEBIDO, AGORA VOLTAMOS A FEATURE DE LIKE (P.S. PARA ACESSAR O OBJETO DE UMA RESPONSE PRECISA DO .JSON())
+    const userObj = await currentUser.json();
 
     const res = await fetch("/api/likes", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postId, like: currentLikes + 1 }),
+      body: JSON.stringify({ postId, userId: userObj.id }),
     });
 
     if (res.ok) {
@@ -80,11 +78,10 @@ export default function Home() {
     return <LoadingPage />;
   }
 
-  //TODO - FUTURE TODO, MUDAR SISTEMA DE LIKES PARA USAR ID DO USUÁRIO PARA PERMITIR APENAS 1 LIKE DE CADA USER
-  //TODO TROCAR TELA DE LOADING POR CIRCULO BÁSICO E MENOS SMOOTH E MAIS RÁPIDO
+  //! CONFIRMAR SE FEATURE ESTÁ 100% FUNCIONAL E FAZER MERGE PARA MAIN/MASTER
 
+  //TODO TROCAR TELA DE LOADING POR CIRCULO BÁSICO E MENOS SMOOTH E MAIS RÁPIDO
   //TODO - COMEÇAR A ENTENDER E PENSAR NO QUE PODE SER MELHORADO E QUAIS FEATURES A MAIS PODEM SER ADICIONADAS
-  //TODO - DESCOBRIR COMO PEGAR O USERID (DO DB, NÃO DO CLERK) PARA PASSAR NOS LIKES
 
   return (
     <>
@@ -139,7 +136,7 @@ export default function Home() {
                   </span>
                   <button
                     className="hover:text-green-500 transition-colors cursor-pointer"
-                    onClick={() => handleLike(post.id, post.likes || 0)}
+                    onClick={() => handleLike(post.id)}
                   >
                     Like
                   </button>
