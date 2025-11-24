@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
 
     if (!userId) {
       return NextResponse.json(
-        { message: "userId não informado" },
+        { message: "userId não existe ou é inválido" },
         { status: 400 }
       );
     }

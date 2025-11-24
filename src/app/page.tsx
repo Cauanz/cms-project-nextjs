@@ -55,16 +55,10 @@ export default function Home() {
       return;
     }
 
-    const currentUser = await fetch(`/api/user/${clerkId}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    const userObj = await currentUser.json();
-
     const res = await fetch("/api/likes", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postId, userId: userObj.id }),
+      body: JSON.stringify({ postId, clerkId }),
     });
 
     if (res.ok) {
@@ -77,8 +71,6 @@ export default function Home() {
   if (isLoading) {
     return <LoadingPage />;
   }
-
-  //! CONFIRMAR SE FEATURE ESTÁ 100% FUNCIONAL E FAZER MERGE PARA MAIN/MASTER
 
   //TODO TROCAR TELA DE LOADING POR CIRCULO BÁSICO E MENOS SMOOTH E MAIS RÁPIDO
   //TODO - COMEÇAR A ENTENDER E PENSAR NO QUE PODE SER MELHORADO E QUAIS FEATURES A MAIS PODEM SER ADICIONADAS
