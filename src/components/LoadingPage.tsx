@@ -27,7 +27,7 @@ export default function LoadingPage() {
 
   useEffect(() => {
 
-    const split = SplitText.create(".text", 
+    const split = SplitText.create(".text",
       {type: "chars"}
     );
     gsap.from(split.chars, {
@@ -44,9 +44,7 @@ export default function LoadingPage() {
       ref={loaderRef}
       className="fixed inset-0 bg-black text-white flex items-center justify-center text-2xl z-50"
     >
-      <p className="text">
-      Loading Page...
-      </p>
+      <p className="text">Loading Page...</p>
     </div>
   );
 }

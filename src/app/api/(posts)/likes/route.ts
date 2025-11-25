@@ -55,15 +55,13 @@ export async function PUT(req: NextRequest) {
 
     if (post?.liked_by.includes(userId)) {
       const updatedLikedBy = post.liked_by.filter((id) => id !== userId);
-
+      console.log(updatedLikedBy.length)
       const updatePost = await prisma.post.update({
         where: {
           id: postId,
         },
         data: {
-          likes: {
-            decrement: 1,
-          },
+          likes: updatedLikedBy.length,
           liked_by: updatedLikedBy,
         },
       });
@@ -74,15 +72,13 @@ export async function PUT(req: NextRequest) {
       );
     } else {
       const updatedLikedBy = [...(post?.liked_by ?? []), userId];
-
+      console.log(updatedLikedBy.length);
       const updatePost = await prisma.post.update({
         where: {
           id: postId,
         },
         data: {
-          likes: {
-            increment: 1,
-          },
+          likes: updatedLikedBy.length,
           liked_by: {
             set: updatedLikedBy,
           },

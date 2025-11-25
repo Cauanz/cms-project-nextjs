@@ -1,9 +1,10 @@
 "use client";
 
 import AlertComponent from "@/components/AlertComponent";
-import LoadingPage from "@/components/LoadingPage";
+// import LoadingPage from "@/components/LoadingPage";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import LoadingPage from "./LoadingPage";
 interface Author {
   name: string;
   id: string;
