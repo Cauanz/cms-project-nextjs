@@ -77,7 +77,8 @@ export default function Sidebar() {
                 </span>
               </Link>
             </li>
-            <li>
+            
+            {/* <li>
               <Link href="/Inbox">
                 <span
                   className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 ${
@@ -97,7 +98,7 @@ export default function Sidebar() {
                 </span>
               </Link>
             </li>
-            {/* <li>
+            <li>
               <a
                 className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 ${
                   pathname === "/dashboard" && "bg-gray-700"
