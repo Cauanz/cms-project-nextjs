@@ -26,8 +26,18 @@ Este projeto é um sistema de gerenciamento de conteúdo (CMS) simples desenvolv
 
 1. Clone o repositório
 2. Instale as dependências com `npm install`
-3. Configure as variáveis de ambiente
-4. Execute o projeto com `npm run dev`
+3. Configure as variáveis de ambiente em um arquivo `.env` na raiz do projeto
+   ```
+   MONGODB_URI=
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+   CLERK_SECRET_KEY=
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+   NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+   NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+   CLERK_WEBHOOK_SIGNING_SECRET=
+   ```
+5. Execute o projeto com `npm run dev`
 
 ## Objetivo
 
