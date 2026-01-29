@@ -18,6 +18,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const navigation1 = [
   { name: "Home", href: "/", current: false },
@@ -27,9 +28,7 @@ const navigation1 = [
   // { name: "Sign in", href: "#", current: false },
 ];
 
-const navigation2 = [
-  { name: "Home", href: "/", current: false }
-];
+const navigation2 = [{ name: "Home", href: "/", current: false }];
 
 // const userNavigation = [
 //   { name: "Your Profile", href: "#" },
@@ -44,6 +43,9 @@ function classNames(...classes: number[] | string[]) {
 export default function Header() {
   const { user, isSignedIn } = useUser();
   const path = usePathname();
+
+  // TODO - AINDA NÃO ENTENDI NEM O QUE FAZER, NEM COMO FUNCIONA PARA SETAR O TEMA DARK/LIGHT
+  // const { theme, setTheme } = useTheme();
 
   const navigation = isSignedIn ? navigation1 : navigation2;
 
@@ -83,7 +85,7 @@ export default function Header() {
                           path === item.href
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                          "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >
                         {item.name}
@@ -129,6 +131,7 @@ export default function Header() {
                       </ul>
                     </SignedIn>
                   </div>
+
                 </div>
               </div>
 
@@ -163,7 +166,7 @@ export default function Header() {
                     path === item.href
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium cursor-pointer"
+                    "block rounded-md px-3 py-2 text-base font-medium cursor-pointer",
                   )}
                 >
                   {item.name}
