@@ -1,4 +1,5 @@
 "use client";
+
 import {
   SignedIn,
   SignedOut,
@@ -18,7 +19,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useTheme } from "next-themes";
+import { useState } from "react";
 
 const navigation1 = [
   { name: "Home", href: "/", current: false },
@@ -46,25 +47,24 @@ export default function Header() {
 
   // TODO - AINDA NÃO ENTENDI NEM O QUE FAZER, NEM COMO FUNCIONA PARA SETAR O TEMA DARK/LIGHT
   // const { theme, setTheme } = useTheme();
+  const [isLight, setIsLight] = useState(false);
+
+  // const toggleTheme = () => {
+  //   if (isLight) {
+  //   }
+  // };
 
   const navigation = isSignedIn ? navigation1 : navigation2;
 
   return (
     <>
       <div className="h-16 z-50 fixed top-0 left-0 w-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-[#F1F3F6] dark:bg-[#020617]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
                   <Link href="/">
-                    {/* <Image
-                      alt="Your Company"
-                      src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                      className="size-8"
-                      width={200}
-                      height={200}
-                    /> */}
                     <Image
                       alt="Logo blog"
                       src="/logo-blog.png"
@@ -74,6 +74,7 @@ export default function Header() {
                     />
                   </Link>
                 </div>
+
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
@@ -83,8 +84,8 @@ export default function Header() {
                         aria-current={path === item.href ? "page" : undefined}
                         className={classNames(
                           path === item.href
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            ? "bg-gray-900 text-[#111827] dark:text-[#E5E7EB]"
+                            : "text-[#111827] hover:bg-gray-700 hover:text-[#111827] dark:text-[#E5E7EB] dark:hover:text-[#E5E7EB]",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >
@@ -94,6 +95,8 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+
+{/* //TODO - EU PAREI AQUI, CONTINUAR MUDANDO OS TEMAS DAS TAGS, E ADICIONANDO O TEMA DARK: */}
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   <button
@@ -103,6 +106,34 @@ export default function Header() {
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
                     <BellIcon aria-hidden="true" className="size-6" />
+                  </button>
+                  <button
+                    type="button"
+                    className="ml-2 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                    aria-label="Toggle theme"
+                    // onClick={() => toggleTheme()}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="size-6"
+                    >
+                      <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
                   </button>
                   <div className="relative ml-3">
                     <SignedOut>
@@ -131,7 +162,6 @@ export default function Header() {
                       </ul>
                     </SignedIn>
                   </div>
-
                 </div>
               </div>
 

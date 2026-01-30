@@ -40,8 +40,7 @@ export default function Home() {
         setPosts(data.posts);
         setIsLoading(false);
       });
-
-    }, []);
+  }, []);
 
   async function handleLike(postId: string) {
     if (!isSignedIn) {
@@ -50,9 +49,7 @@ export default function Home() {
         setIsAlertOpen(false);
       }, 4000);
       setAlertTittle("Erro ao curtir postagem");
-      setAlertDescription(
-        "Voce deve estar logado para curtir uma postagem"
-      );
+      setAlertDescription("Voce deve estar logado para curtir uma postagem");
       return;
     }
 
@@ -95,25 +92,27 @@ export default function Home() {
             posts.map((post: Post) => (
               <div
                 key={post.id}
-                className="bg-white rounded-lg shadow-md p-6 flex flex-col gap-2 border border-gray-100"
+                className="bg-[#ffffff] dark:bg-[#111827] rounded-lg shadow-md p-6 flex flex-col gap-2 border border-gray-100"
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-500">
                     {post.author?.name.charAt(0) || "?"}
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-700">
+                    <div className="font-semibold text-[#4b5563] dark:text-[#9CA3AF]">
                       {post.author.name || "Anônimo"}
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-[#4b5563] dark:text-[#9CA3AF]">
                       {new Date(post.createdAt).toLocaleString()}
                     </div>
                   </div>
                 </div>
-                <div className="text-lg font-medium text-gray-800 bg-amber-600">
+                <div className="text-lg font-medium text-[#111827] dark:text-[#E5E7EB]">
                   {post.title}
                 </div>
-                <div className="text-gray-800">{post.content}</div>
+                <div className="text-[#4b5563] dark:text-[#9CA3AF]">
+                  {post.content}
+                </div>
                 {/* {post.image && (
                   <img
                     src={post.image}
@@ -121,7 +120,7 @@ export default function Home() {
                     className="mt-3 rounded-md max-h-60 object-cover w-full"
                   />
                 )} */}
-                <div className="flex gap-4 mt-4 text-gray-500 text-sm">
+                <div className="flex gap-4 mt-4 text-[#4b5563] dark:text-[#9CA3AF] text-sm">
                   <span>
                     {post.likes !== undefined
                       ? `${post.likes} curtidas`
