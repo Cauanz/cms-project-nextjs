@@ -5,6 +5,7 @@ import AlertComponent from "@/components/AlertComponent";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import LoadingPage from "./LoadingPage";
+import Image from "next/image";
 interface Author {
   name: string;
   id: string;
@@ -16,6 +17,7 @@ interface Post {
   author: Author;
   createdAt: Date;
   likes: number;
+  image: string;
 }
 
 export default function Home() {
@@ -70,7 +72,6 @@ export default function Home() {
     return <LoadingPage />;
   }
 
-  //TODO TROCAR TELA DE LOADING POR CIRCULO BÁSICO E MENOS SMOOTH E MAIS RÁPIDO
   //TODO - COMEÇAR A ENTENDER E PENSAR NO QUE PODE SER MELHORADO E QUAIS FEATURES A MAIS PODEM SER ADICIONADAS
 
   return (
@@ -85,7 +86,7 @@ export default function Home() {
         )}
         <div className="feed flex flex-col gap-6 mt-12 w-full max-w-xl">
           {posts.length === 0 ? (
-            <div className="text-center text-gray-400">
+            <div className="text-center text-[#111827] dark:text-[#E5E7EB]">
               No posts were found.
             </div>
           ) : (
@@ -113,13 +114,13 @@ export default function Home() {
                 <div className="text-[#4b5563] dark:text-[#9CA3AF]">
                   {post.content}
                 </div>
-                {/* {post.image && (
-                  <img
-                    src={post.image}
+                {post?.image && (
+                  <Image
+                    src={post?.image}
                     alt="Imagem da postagem"
                     className="mt-3 rounded-md max-h-60 object-cover w-full"
                   />
-                )} */}
+                )}
                 <div className="flex gap-4 mt-4 text-[#4b5563] dark:text-[#9CA3AF] text-sm">
                   <span>
                     {post.likes !== undefined

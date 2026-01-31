@@ -19,7 +19,6 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
 
 const navigation1 = [
   { name: "Home", href: "/", current: false },
@@ -46,8 +45,12 @@ export default function Header() {
   const path = usePathname();
 
   // TODO - AINDA NÃO ENTENDI NEM O QUE FAZER, NEM COMO FUNCIONA PARA SETAR O TEMA DARK/LIGHT
+  // TODO - PAREI AQUI, REMOVI O SIDEBAR POR SER POINTLESS
+  // TODO - REFATORAR COMPONENTE DE ALERTA, TALVEZ USAR O SHADCN
+
+  // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
   // const { theme, setTheme } = useTheme();
-  const [isLight, setIsLight] = useState(false);
+  // const [isLight, setIsLight] = useState(false);
 
   // const toggleTheme = () => {
   //   if (isLight) {
@@ -84,8 +87,8 @@ export default function Header() {
                         aria-current={path === item.href ? "page" : undefined}
                         className={classNames(
                           path === item.href
-                            ? "bg-gray-900 text-[#111827] dark:text-[#E5E7EB]"
-                            : "text-[#111827] hover:bg-gray-700 hover:text-[#111827] dark:text-[#E5E7EB] dark:hover:text-[#E5E7EB]",
+                            ? "bg-[#c9c8c8] dark:bg-[#020617] text-[#111827] dark:text-[#E5E7EB]"
+                            : "text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#aeb2b8]",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >
@@ -96,18 +99,17 @@ export default function Header() {
                 </div>
               </div>
 
-{/* //TODO - EU PAREI AQUI, CONTINUAR MUDANDO OS TEMAS DAS TAGS, E ADICIONANDO O TEMA DARK: */}
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   <button
                     type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                    className="relative rounded-full bg-[#F1F3F6] p-1 text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
                     <BellIcon aria-hidden="true" className="size-6" />
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="ml-2 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
                     aria-label="Toggle theme"
@@ -129,25 +131,25 @@ export default function Header() {
                       className="size-6"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
-                  </button>
-                  <div className="relative ml-3">
+                  </button> */}
+                  <div className="relative ml-3 flex items-center h-full">
                     <SignedOut>
-                      <ul className="w-40 list-none flex flex-row justify-evenly">
-                        <li>
+                      <ul className="flex flex-row items-center gap-2 h-full">
+                        <li className="flex items-center h-full">
                           <SignInButton>
-                            <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer">
+                            <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer h-9 flex items-center">
                               Sign In
                             </button>
                           </SignInButton>
                         </li>
-                        <li>
+                        <li className="flex items-center h-full">
                           <SignUpButton>
-                            <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer">
+                            <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer h-9 flex items-center">
                               Sign Up
                             </button>
                           </SignUpButton>
@@ -155,8 +157,8 @@ export default function Header() {
                       </ul>
                     </SignedOut>
                     <SignedIn>
-                      <ul className="w-2.5 list-none flex flex-row justify-evenly">
-                        <li>
+                      <ul className="flex flex-row items-center h-full">
+                        <li className="flex items-center h-full">
                           <UserButton />
                         </li>
                       </ul>
@@ -194,8 +196,8 @@ export default function Header() {
                   aria-current={path === item.href ? "page" : undefined}
                   className={classNames(
                     path === item.href
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      ? "bg-[#c9c8c8] dark:bg-[#020617] text-[#111827] dark:text-[#E5E7EB]"
+                      : "text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#aeb2b8]",
                     "block rounded-md px-3 py-2 text-base font-medium cursor-pointer",
                   )}
                 >
@@ -204,19 +206,19 @@ export default function Header() {
               ))}
               <SignedIn>
                 <SignOutButton>
-                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer px-3">
+                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-[#111827] dark:text-[#E5E7EB] hover:bg-gray-700 hover:text-white cursor-pointer px-3">
                     Log out
                   </button>
                 </SignOutButton>
               </SignedIn>
               <SignedOut>
                 <SignInButton>
-                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer px-3">
+                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-[#111827] dark:text-[#E5E7EB] hover:bg-gray-700 hover:text-white cursor-pointer px-3">
                     Sign In
                   </button>
                 </SignInButton>
                 <SignUpButton>
-                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer px-3">
+                  <button className="block w-full text-left rounded-md py-2 text-base font-medium text-[#111827] dark:text-[#E5E7EB] hover:bg-gray-700 hover:text-white cursor-pointer px-3">
                     Sign Up
                   </button>
                 </SignUpButton>
@@ -235,16 +237,16 @@ export default function Header() {
                     />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base/5 font-medium text-white">
+                    <div className="text-base/5 font-medium text-[#111827] dark:text-[#E5E7EB]">
                       {user?.firstName}
                     </div>
-                    <div className="text-sm font-medium text-gray-400">
+                    <div className="text-sm font-medium text-[#4B5563] dark:text-[#9CA3AF]">
                       {user?.emailAddresses[0].emailAddress}
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                    className="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>

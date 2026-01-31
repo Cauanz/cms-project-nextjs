@@ -1,5 +1,5 @@
 "use client";
-import LoadingPage from "@/components/LoadingPage";
+import LoadingPage from "@/components/LoadingComponent";
 import Sidebar from "@/components/Sidebar";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
@@ -53,8 +53,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <Sidebar />
-      <main className="pt-16 sm:pl-64 w-full">
+      {/* <Sidebar /> */}
+      <main className="pt-16 w-full">
         <div className="cards flex justify-between">
           <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
             <p>Your Posts:{posts.length}</p>

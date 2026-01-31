@@ -1,6 +1,6 @@
 "use client";
-import LoadingPage from "@/components/LoadingPage";
-import Sidebar from "@/components/Sidebar";
+import LoadingPage from "@/components/LoadingComponent";
+// import Sidebar from "@/components/Sidebar";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -98,8 +98,8 @@ export default function Posts() {
 
   return (
     <>
-      <Sidebar />
-      <div className="pt-16 sm:pl-64 w-full">
+      {/* <Sidebar /> */}
+      <div className="pt-16 w-full">
         <div className="flex justify-end p-6">
           <button
             onClick={() => setShowForm(true)}
@@ -109,17 +109,10 @@ export default function Posts() {
           </button>
         </div>
         {showForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-8 shadow-lg w-full max-w-md relative">
-              <button
-                onClick={() => setShowForm(false)}
-                className="absolute top-2 right-2 text-gray-700 hover:text-gray-700 text-xl cursor-pointer"
-                aria-label="Fechar"
-              >
-                &times;
-              </button>
-              <h3 className="text-lg font-bold mb-4 text-gray-900">
-                Create new post
+          <div className="fixed inset-0 bg-black/50 dark:bg-white/50 flex items-center justify-center z-50">
+            <div className="bg-[#FFFFFF] dark:bg-[#111827] rounded-lg p-8 shadow-lg w-full max-w-md relative">
+              <h3 className=" text-center text-lg font-bold mb-4 text-gray-900 dark:text-white">
+                CREATE NEW POST
               </h3>
               <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
                 <input
@@ -127,20 +120,28 @@ export default function Posts() {
                   type="text"
                   placeholder="Tittle"
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 dark:text-white"
                 />
                 <textarea
                   name="content"
                   placeholder="Content"
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                  className="w-full border border-gray-300 rounded px-3 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 dark:text-white"
                 />
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors cursor-pointer"
-                >
-                  Create
-                </button>
+                <div className="flex gap-5">
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors cursor-pointer"
+                  >
+                    Post
+                  </button>
+                  <button
+                    onClick={() => setShowForm(false)}
+                    className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </form>
             </div>
           </div>

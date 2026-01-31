@@ -3,7 +3,9 @@ import { useEffect, useRef } from "react";
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
 
-export default function LoadingPage() {
+// TODO - MUDAR ISSO PARA UM LOADING SIMPLES, DE PREFERENCIA COM LIGHT/DARK OU FUNCIONAL PARA OS DOIS
+
+export default function LoadingComponent() {
   const loaderRef = useRef(null);
 
   gsap.registerPlugin(SplitText);
@@ -20,24 +22,20 @@ export default function LoadingPage() {
 
     tl.fromTo(
       loaderRef.current,
-      { y: 0, opacity: 1},
-      { y: -5, duration: 0.5, delay: 1}
+      { y: 0, opacity: 1 },
+      { y: -5, duration: 0.5, delay: 1 },
     );
   }, []);
 
   useEffect(() => {
-
-    const split = SplitText.create(".text",
-      {type: "chars"}
-    );
+    const split = SplitText.create(".text", { type: "chars" });
     gsap.from(split.chars, {
       duration: 0.5,
       y: -100,
       autoAlpha: 0,
-      stagger: 0.05
-    })
-
-  }, [])
+      stagger: 0.05,
+    });
+  }, []);
 
   return (
     <div
