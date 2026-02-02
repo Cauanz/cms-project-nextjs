@@ -1,6 +1,10 @@
 "use client";
 import LoadingPage from "@/components/LoadingComponent";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardTitle,
+} from "@/components/ui/card";
 import Sidebar from "@/components/Sidebar";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
