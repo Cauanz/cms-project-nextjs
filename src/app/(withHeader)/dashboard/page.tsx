@@ -1,6 +1,7 @@
 "use client";
 import LoadingPage from "@/components/LoadingComponent";
-// import Sidebar from "@/components/Sidebar";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import Sidebar from "@/components/Sidebar";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -109,40 +110,45 @@ export default function Dashboard() {
     return <LoadingPage />;
   }
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   fetch(`/api/posts?clerkId=${clerkId}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setPosts(data.posts);
-  //       setIsLoading(false);
-  //     });
-  // }, [clerkId]);
-
-  // TODO - PAREI AQUI, CONTINUAR UNINDO A PÁGINA POST EM DASHBOARD (E ELIMINAR POSTS?)
+  // TODO - PAREI AQUI, CONTINUAR UNINDO A PÁGINA POST EM DASHBOARD (ELIMINAR POSTS?)
   // TODO - CONTINUAR REFATORANDO E REMOVENDO BLOATWARE
+  // TODO - RETORNEI O SIDEBAR PORQUE ACHO QUE DÁ PARA ADICIONAR OUTRAS OPÇÕES DENTRO DE DASHBOARD, TIPO POSTS, ANALITICS ETC.. (NA REAL ACHO QUE NEM TEM TANTA COISA PARA COLOCAR, SE NÃO ACHAR NADA QUE VALHA A PENA COLOCAR EM UM SIDEBAR, TIRA O SIDEBAR)
 
   return (
     <>
-      {/* <Sidebar /> */}
-      <main className="pt-16 w-full">
+      <Sidebar />
+      <main className="pt-16 sm:pl-64 p-5 w-full">
         {/* SECTION DE MÉTRICAS */}
         <section>
           <div className="cards flex justify-between">
-            <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
-              <p>Your Posts:{posts.length}</p>
-            </div>
+            <Card className="w-full max-w-sm bg-[#7C3AED]">
+              <CardTitle className="flex items-center justify-center">
+                <h1 className="text-2xl">Your Posts</h1>
+              </CardTitle>
+              <CardContent className="flex items-center justify-center">
+                <p className="text-7xl">{posts.length}</p>
+              </CardContent>
+            </Card>
 
-            <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
-              <p>Total Posts:{allposts.length}</p>
-            </div>
+            <Card className="w-full max-w-sm bg-[#7C3AED]">
+              <CardTitle className="flex items-center justify-center">
+                <h1 className="text-2xl">Total Posts</h1>
+              </CardTitle>
+              <CardContent className="flex items-center justify-center">
+                <p className="text-7xl">{allposts.length}</p>
+              </CardContent>
+            </Card>
 
-            <div className="bg-gray-600 w-3xs h-28 flex items-center justify-center">
-              <p>
-                Total Likes:
-                {posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}
-              </p>
-            </div>
+            <Card className="w-full max-w-sm bg-[#7C3AED]">
+              <CardTitle className="flex items-center justify-center">
+                <h1 className="text-2xl">Total Likes</h1>
+              </CardTitle>
+              <CardContent className="flex items-center justify-center">
+                <p className="text-7xl">
+                  {posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </section>
 

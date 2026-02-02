@@ -23,7 +23,7 @@ import Link from "next/link";
 const navigation1 = [
   { name: "Home", href: "/", current: false },
   { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Posts", href: "/posts", current: false },
+  // { name: "Posts", href: "/posts", current: false },
   // { name: "Log in", href: "#", current: false },
   // { name: "Sign in", href: "#", current: false },
 ];
