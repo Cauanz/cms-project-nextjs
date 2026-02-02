@@ -11,7 +11,7 @@ const AlertComponent = ({ title, description, closeAlert }: Props) => {
     <div className="absolute top-18 right-20">
       <div className="container">
         <div className="border-2 border-red-500 dark:bg-dark-2 flex max-w-[655px] items-center rounded-md border-l-[6px] bg-white p-5 pl-6">
-          <div className="bg-yellow mr-5 flex h-[36px] w-full max-w-[36px] items-center justify-center rounded-full">
+          <div className="bg-yellow mr-5 flex h-9 w-full max-w-9 items-center justify-center rounded-full">
             <svg
               width="18"
               height="18"

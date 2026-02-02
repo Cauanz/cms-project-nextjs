@@ -45,7 +45,6 @@ export default function Header() {
   const path = usePathname();
 
   // TODO - AINDA NÃO ENTENDI NEM O QUE FAZER, NEM COMO FUNCIONA PARA SETAR O TEMA DARK/LIGHT
-  // TODO - PAREI AQUI, REMOVI O SIDEBAR POR SER POINTLESS
   // TODO - REFATORAR COMPONENTE DE ALERTA, TALVEZ USAR O SHADCN
 
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
@@ -53,8 +52,6 @@ export default function Header() {
   // const [isLight, setIsLight] = useState(false);
 
   // const toggleTheme = () => {
-  //   if (isLight) {
-  //   }
   // };
 
   const navigation = isSignedIn ? navigation1 : navigation2;
@@ -109,6 +106,7 @@ export default function Header() {
                     <span className="sr-only">View notifications</span>
                     <BellIcon aria-hidden="true" className="size-6" />
                   </button>
+                  {/* BOTÃO TOGGLE DE TEAM DARK/LIGHT */}
                   {/* <button
                     type="button"
                     className="ml-2 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
@@ -142,14 +140,14 @@ export default function Header() {
                       <ul className="flex flex-row items-center gap-2 h-full">
                         <li className="flex items-center h-full">
                           <SignInButton>
-                            <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer h-9 flex items-center">
+                            <button className="border-2 bg-[#020617] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] rounded-lg p-1.5 cursor-pointer h-9 flex items-center text-sm font-medium">
                               Sign In
                             </button>
                           </SignInButton>
                         </li>
                         <li className="flex items-center h-full">
                           <SignUpButton>
-                            <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer h-9 flex items-center">
+                            <button className="border-2 bg-[#020617] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] rounded-lg p-1.5 cursor-pointer h-9 flex items-center text-sm font-medium">
                               Sign Up
                             </button>
                           </SignUpButton>
@@ -167,6 +165,7 @@ export default function Header() {
                 </div>
               </div>
 
+              {/* MOBILE AREA */}
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
                 <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer">
@@ -185,7 +184,6 @@ export default function Header() {
             </div>
           </div>
 
-          {/* MOBILE AREA */}
           <DisclosurePanel className="md:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
               {navigation.map((item) => (
