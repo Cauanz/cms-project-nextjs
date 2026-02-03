@@ -100,14 +100,14 @@ export default function Posts() {
     <>
       {/* <Sidebar /> */}
       <div className="pt-16 w-full">
-        <div className="flex justify-end p-6">
+        {/* <div className="flex justify-end p-6">
           <button
             onClick={() => setShowForm(true)}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow transition-colors cursor-pointer"
           >
             New Post
           </button>
-        </div>
+        </div> */}
         {showForm && (
           <div className="fixed inset-0 bg-black/50 dark:bg-white/50 flex items-center justify-center z-50">
             <div className="bg-[#FFFFFF] dark:bg-[#111827] rounded-lg p-8 shadow-lg w-full max-w-md relative">
