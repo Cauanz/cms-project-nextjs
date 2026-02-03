@@ -46,6 +46,8 @@ export default function Header() {
 
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
   // TODO - TEMOS QUE FAZER O DASHBOARD CONTINUAR ATIVO MESMO QUANDO ESTAMOS EM NEWPOST OU POSTS, A MENOS QUE COLOQUEMOS POSTS E NEWPOST DENTRO DA PASTA DASHBOARD, DAI O URL SERIA HERDADO
+  // TODO - E AGORA QUE O TEMA DARK ESTÁ FUNCIONANDO, CONSERTE ESSA UI DARK HORRIVELLL
+  // TODO - E ADICIONE O TOGGLE PARA MUDAR O TEMA AGORA QUE VOCE ENTENDEU
   // const { theme, setTheme } = useTheme();
   // const [isLight, setIsLight] = useState(false);
 
@@ -83,7 +85,7 @@ export default function Header() {
                         className={classNames(
                           path === item.href
                             ? "bg-[#c9c8c8] dark:bg-[#020617] text-[#111827] dark:text-[#E5E7EB]"
-                            : "text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#aeb2b8]",
+                            : "text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827]",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >

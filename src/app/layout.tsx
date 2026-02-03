@@ -10,10 +10,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body suppressHydrationWarning>
-          <Header />
-          <ThemeProvider>{children}</ThemeProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body>
+          <ThemeProvider attribute="class">
+            <Header />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
