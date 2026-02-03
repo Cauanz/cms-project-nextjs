@@ -1,11 +1,7 @@
 "use client";
 import LoadingPage from "@/components/LoadingComponent";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
-import Sidebar from "@/components/Sidebar";
+import SideBar from "@/components/SideBar";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -114,13 +110,9 @@ export default function Dashboard() {
     return <LoadingPage />;
   }
 
-  // TODO - PAREI AQUI, CONTINUAR UNINDO A PÁGINA POST EM DASHBOARD (ELIMINAR POSTS?)
-  // TODO - CONTINUAR REFATORANDO E REMOVENDO BLOATWARE
-  // TODO - RETORNEI O SIDEBAR PORQUE ACHO QUE DÁ PARA ADICIONAR OUTRAS OPÇÕES DENTRO DE DASHBOARD, TIPO POSTS, ANALITICS ETC.. (NA REAL ACHO QUE NEM TEM TANTA COISA PARA COLOCAR, SE NÃO ACHAR NADA QUE VALHA A PENA COLOCAR EM UM SIDEBAR, TIRA O SIDEBAR)
-
   return (
     <>
-      <Sidebar />
+      <SideBar />
       <main className="pt-16 sm:pl-64 p-5 w-full">
         {/* SECTION DE MÉTRICAS */}
         <section>

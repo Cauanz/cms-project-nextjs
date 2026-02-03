@@ -1,48 +1,51 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { SplitText } from "gsap/SplitText";
-import gsap from "gsap";
-
-// TODO - MUDAR ISSO PARA UM LOADING SIMPLES, DE PREFERENCIA COM LIGHT/DARK OU FUNCIONAL PARA OS DOIS
+// import { useEffect, useRef } from "react";
+// import { SplitText } from "gsap/SplitText";
+// import gsap from "gsap";
+import { Spinner } from "./ui/spinner";
 
 export default function LoadingComponent() {
-  const loaderRef = useRef(null);
+  // const loaderRef = useRef(null);
 
-  gsap.registerPlugin(SplitText);
-  useEffect(() => {
-    const tl = gsap.timeline({
-      onComplete: () => {
-        gsap.to(loaderRef.current, {
-          opacity: 0,
-          duration: 0.5,
-          // onComplete: onFinish
-        });
-      },
-    });
+  // gsap.registerPlugin(SplitText);
+  // useEffect(() => {
+  //   const tl = gsap.timeline({
+  //     onComplete: () => {
+  //       gsap.to(loaderRef.current, {
+  //         opacity: 0,
+  //         duration: 0.5,
+  //         // onComplete: onFinish
+  //       });
+  //     },
+  //   });
 
-    tl.fromTo(
-      loaderRef.current,
-      { y: 0, opacity: 1 },
-      { y: -5, duration: 0.5, delay: 1 },
-    );
-  }, []);
+  //   tl.fromTo(
+  //     loaderRef.current,
+  //     { y: 0, opacity: 1 },
+  //     { y: -5, duration: 0.5, delay: 1 },
+  //   );
+  // }, []);
 
-  useEffect(() => {
-    const split = SplitText.create(".text", { type: "chars" });
-    gsap.from(split.chars, {
-      duration: 0.5,
-      y: -100,
-      autoAlpha: 0,
-      stagger: 0.05,
-    });
-  }, []);
+  // useEffect(() => {
+  //   const split = SplitText.create(".text", { type: "chars" });
+  //   gsap.from(split.chars, {
+  //     duration: 0.5,
+  //     y: -100,
+  //     autoAlpha: 0,
+  //     stagger: 0.05,
+  //   });
+  // }, []);
 
   return (
-    <div
-      ref={loaderRef}
-      className="fixed inset-0 bg-black text-white flex items-center justify-center text-2xl z-50"
-    >
-      <p className="text">Loading Page...</p>
+    // <div
+    //   ref={loaderRef}
+    //   className="fixed inset-0 bg-black text-white flex items-center justify-center text-2xl z-50"
+    // >
+    //   <p className="text">Loading Page...</p>
+    // </div>
+
+    <div className="fixed inset-0 bg-black/70 text-white dark:bg-white/70 dark:text-black flex items-center justify-center z-50">
+      <Spinner className="size-10" />
     </div>
   );
 }

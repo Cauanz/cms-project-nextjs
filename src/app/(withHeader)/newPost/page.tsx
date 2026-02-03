@@ -1,17 +1,14 @@
 "use client";
 
-import LoadingPage from "@/app/LoadingPage";
-import Sidebar from "@/components/Sidebar";
+import SideBar from "@/components/SideBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@clerk/nextjs";
 import { FormEvent, useState } from "react";
 
 export default function NewPost() {
-  // const [posts, setPosts] = useState([]);
-  // const [showForm, setShowForm] = useState(false);
-  // const [showEditForm, setShowEditForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [title, setTitle] = useState("");
@@ -31,14 +28,9 @@ export default function NewPost() {
     });
 
     if (res.ok) {
-      // setShowForm(false);
       form.reset();
       handleReset();
       setIsLoading(false);
-
-      // fetch(`/api/posts?clerkId=${clerkId}`)
-      //   .then((res) => res.json())
-      //   .then((data) => setPosts(data.posts));
     }
   };
 
@@ -47,15 +39,15 @@ export default function NewPost() {
     setContent("");
   };
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  // if (isLoading) {
+  //   return <LoadingPage />;
+  // }
 
   // TODO - FUNCIONANDO, MAS PRECISA DE POLIMENTO E REVISÃO
 
   return (
     <>
-      <Sidebar />
+      <SideBar />
 
       <main className="pt-16 sm:pl-64 w-full flex justify-center">
         {/* <div className="fixed inset-0 bg-black/50 dark:bg-white/50 flex items-center justify-center z-50"> */}
@@ -96,7 +88,7 @@ export default function NewPost() {
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors cursor-pointer"
                 >
-                  Post
+                  {isLoading ? <Spinner /> : "Post"}
                 </Button>
                 <Button
                   onClick={() => handleReset()}

@@ -44,10 +44,8 @@ export default function Header() {
   const { user, isSignedIn } = useUser();
   const path = usePathname();
 
-  // TODO - AINDA NÃO ENTENDI NEM O QUE FAZER, NEM COMO FUNCIONA PARA SETAR O TEMA DARK/LIGHT
-  // TODO - REFATORAR COMPONENTE DE ALERTA, TALVEZ USAR O SHADCN
-
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
+  // TODO - TEMOS QUE FAZER O DASHBOARD CONTINUAR ATIVO MESMO QUANDO ESTAMOS EM NEWPOST OU POSTS, A MENOS QUE COLOQUEMOS POSTS E NEWPOST DENTRO DA PASTA DASHBOARD, DAI O URL SERIA HERDADO
   // const { theme, setTheme } = useTheme();
   // const [isLight, setIsLight] = useState(false);
 
@@ -272,41 +270,3 @@ export default function Header() {
     </>
   );
 }
-
-//* OLD HEADER
-// <div className="w-full h-17 bg-amber-400 flex items-center justify-between p-3.5">
-//   <SignedOut>
-//     <ul className="w-40 list-none flex flex-row justify-evenly">
-//       <li>
-//         <SignInButton>
-//           <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer">
-//             Sign In
-//           </button>
-//         </SignInButton>
-//       </li>
-//       <li>
-//         <SignUpButton>
-//           <button className="border-2 border-gray-600 bg-gray-600 hover:bg-gray-400 rounded-lg p-1.5 cursor-pointer">
-//             Sign Up
-//           </button>
-//         </SignUpButton>
-//       </li>
-//     </ul>
-//   </SignedOut>
-//   <SignedIn>
-//     <ul className="w-2.5 list-none flex flex-row justify-evenly">
-//       <li>
-//         <UserButton />
-//       </li>
-//     </ul>
-//   </SignedIn>
-
-//   <div className="imageContent flex w-32 h-16">
-//     <Image
-//       src="https://picsum.photos/20/30"
-//       alt="placeholder"
-//       width="300"
-//       height="200"
-//     />
-//   </div>
-// </div>

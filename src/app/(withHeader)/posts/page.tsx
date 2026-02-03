@@ -1,6 +1,6 @@
 "use client";
 import LoadingPage from "@/components/LoadingComponent";
-// import Sidebar from "@/components/Sidebar";
+import SideBar from "@/components/SideBar";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -98,8 +98,8 @@ export default function Posts() {
 
   return (
     <>
-      {/* <Sidebar /> */}
-      <div className="pt-16 w-full">
+      <SideBar />
+      <div className="pt-16 sm:pl-64 w-full">
         {/* <div className="flex justify-end p-6">
           <button
             onClick={() => setShowForm(true)}
