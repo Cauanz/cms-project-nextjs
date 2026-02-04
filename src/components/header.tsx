@@ -98,71 +98,51 @@ export default function Header() {
               </div>
 
               <div className="hidden md:block">
-                <div className="ml-4 flex items-center md:ml-6">
+                <div className="flex items-center gap-4 md:gap-6">
                   <button
                     type="button"
-                    className="relative rounded-full bg-[#F1F3F6] p-1 text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer"
+                    className="relative flex items-center justify-center rounded-full bg-[#F1F3F6] dark:bg-[#2d2d2d] p-2 text-[#111827] dark:text-[#E5E7EB] hover:bg-[#e5e7eb] dark:hover:bg-[#3e3d3f] hover:text-[#17074D] dark:hover:text-[#b3b3b3] focus:ring-2 focus:ring-[#17074D] focus:ring-offset-2 focus:outline-none transition-colors duration-150"
                   >
                     <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
+                    <span className="sr-only">Ver notificações</span>
                     <BellIcon aria-hidden="true" className="size-6" />
                   </button>
-                  <ThemeToggle />
-                  {/* BOTÃO TOGGLE DE TEAM DARK/LIGHT */}
-                  {/* <button
-                    type="button"
-                    className="ml-2 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                    aria-label="Toggle theme"
-                    // onClick={() => toggleTheme()}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="size-6"
-                    >
-                      <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
-                    </svg>
-
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button> */}
-                  <div className="relative ml-3 flex items-center h-full">
-                    <SignedOut>
-                      <ul className="flex flex-row items-center gap-2 h-full">
-                        <li className="flex items-center h-full">
-                          <SignInButton>
-                            <button className="border-2 bg-[#020617] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] rounded-lg p-1.5 cursor-pointer h-9 flex items-center text-sm font-medium">
-                              Sign In
-                            </button>
-                          </SignInButton>
-                        </li>
-                        <li className="flex items-center h-full">
-                          <SignUpButton>
-                            <button className="border-2 bg-[#020617] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] rounded-lg p-1.5 cursor-pointer h-9 flex items-center text-sm font-medium">
-                              Sign Up
-                            </button>
-                          </SignUpButton>
-                        </li>
-                      </ul>
-                    </SignedOut>
-                    <SignedIn>
-                      <ul className="flex flex-row items-center h-full">
-                        <li className="flex items-center h-full dark:bg-white rounded-3xl">
-                          <UserButton />
-                        </li>
-                      </ul>
-                    </SignedIn>
+                  <div className="flex items-center gap-2 md:gap-3 px-2 py-1 rounded-xl bg-[#ececec] dark:bg-[#232136]">
+                    <ThemeToggle />
+                    <div className="relative flex items-center h-full">
+                      <SignedOut>
+                        <ul className="flex flex-row items-center gap-2 h-full">
+                          <li>
+                            <SignInButton>
+                              <button className="border border-[#b3b3b3] bg-[#17074D] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] dark:hover:bg-[#b3b3b3] dark:hover:text-[#17074D] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
+                                Entrar
+                              </button>
+                            </SignInButton>
+                          </li>
+                          <li>
+                            <SignUpButton>
+                              <button className="border border-[#b3b3b3] bg-[#E5E7EB] text-[#17074D] dark:bg-[#232136] dark:text-[#E5E7EB] hover:bg-[#b3b3b3] hover:text-[#17074D] dark:hover:bg-[#b3b3b3] dark:hover:text-[#232136] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
+                                Registrar
+                              </button>
+                            </SignUpButton>
+                          </li>
+                        </ul>
+                      </SignedOut>
+                      <SignedIn>
+                        <ul className="flex flex-row items-center h-full">
+                          <li className="flex items-center h-full dark:bg-white rounded-4xl">
+                            <UserButton
+                              appearance={{
+                                elements: {
+                                  userButtonAvatarBox:
+                                    "ring-2 ring-[#17074D] dark:ring-[#E5E7EB] rounded-full",
+                                },
+                              }}
+                            />
+                          </li>
+                        </ul>
+                      </SignedIn>
+                    </div>
                   </div>
                 </div>
               </div>

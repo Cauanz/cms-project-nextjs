@@ -1,22 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { Toggle } from "./ui/toggle";
 import { Input } from "./ui/input";
+import { useTheme } from "next-themes";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
 
   const handlePress = (e) => {
-    console.log("pressed");
-    console.log(e.target.value);
+    if (e?.target?.value === "dark") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
   };
 
-  // TODO - CONTINUAR CRIANDO ISSO, NADA FUNCIONA AINDA E CORRINDO AS CORES
+// TODO - CORRIGIR PROBLEMA DELE VOLTAR PARA POSIÇÃO ESCURO QUANDO ESTÁ CLARO, TALVEZ TENHA A VER COM ARMAZENAR O TEMA NO LOCALSTORAGE PARA ELE LEMBRAR
 
   return (
     <label className="switch">
-      <Input type="checkbox" onChange={(e) => handlePress(e)} />
+      <Input type="checkbox" onChange={(e) => handlePress(e)} value={theme} />
       <span className="slider round"></span>
     </label>
   );
