@@ -19,6 +19,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import ThemeToggle from "./themeToggle";
 
 const navigation1 = [
   { name: "Home", href: "/", current: false },
@@ -59,7 +60,7 @@ export default function Header() {
   return (
     <>
       <div className="h-16 z-50 fixed top-0 left-0 w-full">
-        <Disclosure as="nav" className="bg-[#F1F3F6] dark:bg-[#020617]">
+        <Disclosure as="nav" className="bg-[#F1F3F6] dark:bg-[#17074D]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
@@ -84,7 +85,7 @@ export default function Header() {
                         aria-current={path === item.href ? "page" : undefined}
                         className={classNames(
                           path === item.href
-                            ? "bg-[#c9c8c8] dark:bg-[#020617] text-[#111827] dark:text-[#E5E7EB]"
+                            ? "bg-[#c9c8c8] dark:bg-[#3e3d3f] text-[#111827] dark:text-[#E5E7EB]"
                             : "text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827]",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
@@ -106,6 +107,7 @@ export default function Header() {
                     <span className="sr-only">View notifications</span>
                     <BellIcon aria-hidden="true" className="size-6" />
                   </button>
+                  <ThemeToggle />
                   {/* BOTÃO TOGGLE DE TEAM DARK/LIGHT */}
                   {/* <button
                     type="button"
@@ -156,7 +158,7 @@ export default function Header() {
                     </SignedOut>
                     <SignedIn>
                       <ul className="flex flex-row items-center h-full">
-                        <li className="flex items-center h-full">
+                        <li className="flex items-center h-full dark:bg-white rounded-3xl">
                           <UserButton />
                         </li>
                       </ul>
