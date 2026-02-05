@@ -14,7 +14,7 @@ export default function ThemeToggle() {
     }
   };
 
-// TODO - CORRIGIR PROBLEMA DELE VOLTAR PARA POSIÇÃO ESCURO QUANDO ESTÁ CLARO, TALVEZ TENHA A VER COM ARMAZENAR O TEMA NO LOCALSTORAGE PARA ELE LEMBRAR
+// TODO - CONSERTADO MAS TALVEZ AINDA TENHA QUE ARMAZENAR O TEMA NO LOCALSTORAGE PARA ELE LEMBRAR
 
   return (
     <label className="switch">
@@ -22,7 +22,4 @@ export default function ThemeToggle() {
       <span className="slider round"></span>
     </label>
   );
-  {
-    /* <Toggle onPressedChange={(e) => handlePress(e)} /> */
-  }
 }

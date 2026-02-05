@@ -47,13 +47,7 @@ export default function Header() {
 
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
   // TODO - TEMOS QUE FAZER O DASHBOARD CONTINUAR ATIVO MESMO QUANDO ESTAMOS EM NEWPOST OU POSTS, A MENOS QUE COLOQUEMOS POSTS E NEWPOST DENTRO DA PASTA DASHBOARD, DAI O URL SERIA HERDADO
-  // TODO - E AGORA QUE O TEMA DARK ESTÁ FUNCIONANDO, CONSERTE ESSA UI DARK HORRIVELLL
-  // TODO - E ADICIONE O TOGGLE PARA MUDAR O TEMA AGORA QUE VOCE ENTENDEU
-  // const { theme, setTheme } = useTheme();
-  // const [isLight, setIsLight] = useState(false);
-
-  // const toggleTheme = () => {
-  // };
+  // TODO - AINDA TEM ALGUNS ELEMENTOS COM TEMA INCONSISTENTE
 
   const navigation = isSignedIn ? navigation1 : navigation2;
 
@@ -69,7 +63,7 @@ export default function Header() {
                     <Image
                       alt="Logo blog"
                       src="/logo-blog.png"
-                      className="size-8"
+                      className="size-9"
                       width={200}
                       height={200}
                     />
@@ -86,7 +80,7 @@ export default function Header() {
                         className={classNames(
                           path === item.href
                             ? "bg-[#c9c8c8] dark:bg-[#3e3d3f] text-[#111827] dark:text-[#E5E7EB]"
-                            : "text-[#111827] hover:bg-gray-700 hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827]",
+                            : "text-[#111827] hover:bg-[#3e3d3f] hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827]",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >
@@ -101,13 +95,13 @@ export default function Header() {
                 <div className="flex items-center gap-4 md:gap-6">
                   <button
                     type="button"
-                    className="relative flex items-center justify-center rounded-full bg-[#F1F3F6] dark:bg-[#2d2d2d] p-2 text-[#111827] dark:text-[#E5E7EB] hover:bg-[#e5e7eb] dark:hover:bg-[#3e3d3f] hover:text-[#17074D] dark:hover:text-[#b3b3b3] focus:ring-2 focus:ring-[#17074D] focus:ring-offset-2 focus:outline-none transition-colors duration-150"
+                    className="relative flex items-center justify-center rounded-full bg-[#F1F3F6] dark:bg-[#3e3d3f] p-2 text-[#111827] dark:text-[#E5E7EB] hover:bg-[#e5e7eb] dark:hover:text-[#111827] hover:text-[#17074D] dark:hover:bg-[#b3b3b3] transition-colors duration-150 cursor-pointer"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Ver notificações</span>
                     <BellIcon aria-hidden="true" className="size-6" />
                   </button>
-                  <div className="flex items-center gap-2 md:gap-3 px-2 py-1 rounded-xl bg-[#ececec] dark:bg-[#232136]">
+                  <div className="flex items-center gap-2 md:gap-3 px-2 py-1 rounded-xl bg-[#ececec] dark:bg-[#3e3d3f]">
                     <ThemeToggle />
                     <div className="relative flex items-center h-full">
                       <SignedOut>
@@ -115,14 +109,14 @@ export default function Header() {
                           <li>
                             <SignInButton>
                               <button className="border border-[#b3b3b3] bg-[#17074D] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] dark:hover:bg-[#b3b3b3] dark:hover:text-[#17074D] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
-                                Entrar
+                                Log in
                               </button>
                             </SignInButton>
                           </li>
                           <li>
                             <SignUpButton>
                               <button className="border border-[#b3b3b3] bg-[#E5E7EB] text-[#17074D] dark:bg-[#232136] dark:text-[#E5E7EB] hover:bg-[#b3b3b3] hover:text-[#17074D] dark:hover:bg-[#b3b3b3] dark:hover:text-[#232136] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
-                                Registrar
+                                Sign Up
                               </button>
                             </SignUpButton>
                           </li>

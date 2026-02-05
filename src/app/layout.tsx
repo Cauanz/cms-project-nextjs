@@ -12,7 +12,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body>
-          <ThemeProvider attribute="class">
+          <ThemeProvider attribute="class" enableSystem={false}>
             <Header />
             {children}
           </ThemeProvider>
