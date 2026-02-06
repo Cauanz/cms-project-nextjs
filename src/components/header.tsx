@@ -19,7 +19,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import ThemeToggle from "./themeToggle";
+import ThemeToggle from "./ThemeToggle";
 
 const navigation1 = [
   { name: "Home", href: "/", current: false },
@@ -44,9 +44,10 @@ function classNames(...classes: number[] | string[]) {
 export default function Header() {
   const { user, isSignedIn } = useUser();
   const path = usePathname();
+  
+  console.log(path.split(" "))
 
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
-  // TODO - TEMOS QUE FAZER O DASHBOARD CONTINUAR ATIVO MESMO QUANDO ESTAMOS EM NEWPOST OU POSTS, A MENOS QUE COLOQUEMOS POSTS E NEWPOST DENTRO DA PASTA DASHBOARD, DAI O URL SERIA HERDADO
   // TODO - AINDA TEM ALGUNS ELEMENTOS COM TEMA INCONSISTENTE
 
   const navigation = isSignedIn ? navigation1 : navigation2;
@@ -57,6 +58,7 @@ export default function Header() {
         <Disclosure as="nav" className="bg-[#F1F3F6] dark:bg-[#17074D]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
+              {/* LEFT */}
               <div className="flex items-center">
                 <div className="shrink-0">
                   <Link href="/">
@@ -78,7 +80,7 @@ export default function Header() {
                         href={item.href}
                         aria-current={path === item.href ? "page" : undefined}
                         className={classNames(
-                          path === item.href
+                          path.split("/")[1] === item.href.split("/")[1]
                             ? "bg-[#c9c8c8] dark:bg-[#3e3d3f] text-[#111827] dark:text-[#E5E7EB]"
                             : "text-[#111827] hover:bg-[#3e3d3f] hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827]",
                           "rounded-md px-3 py-2 text-sm font-medium",
@@ -90,7 +92,9 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+              {/* LEFT */}
 
+              {/* RIGHT */}
               <div className="hidden md:block">
                 <div className="flex items-center gap-4 md:gap-6">
                   <button
@@ -140,6 +144,7 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+              {/* RIGHT */}
 
               {/* MOBILE AREA */}
               <div className="-mr-2 flex md:hidden">

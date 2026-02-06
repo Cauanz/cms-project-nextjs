@@ -37,10 +37,10 @@ export default function SideBar() {
               </Link>
             </li>
             <li>
-              <Link href="/posts">
+              <Link href="/dashboard/posts">
                 <span
                   className={`flex items-center p-2 rounded-lg text-[#111827] hover:bg-[#3e3d3f] hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827] 
-                    ${pathname === "/posts" && "text-[#111827] bg-[#c9c8c8] dark:text-[#E5E7EB] dark:bg-[#3e3d3f]"}  dark:hover:bg-[#3e3d3f] group`}
+                    ${pathname === "/dashboard/posts" && "text-[#111827] bg-[#c9c8c8] dark:text-[#E5E7EB] dark:bg-[#3e3d3f]"}  dark:hover:bg-[#3e3d3f] group`}
                 >
                   <svg
                     className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#dee0e2] dark:group-hover:text-[#111827]"
@@ -56,10 +56,10 @@ export default function SideBar() {
               </Link>
             </li>
             <li>
-              <Link href="/newPost">
+              <Link href="/dashboard/newPost">
                 <span
                   className={`flex items-center p-2 rounded-lg text-[#111827] hover:bg-[#3e3d3f] hover:text-[#dee0e2] dark:text-[#E5E7EB] dark:hover:bg-[#b3b3b3] dark:hover:text-[#111827] ${
-                    pathname === "/newPost" &&
+                    pathname === "/dashboard/newPost" &&
                     "text-[#111827] bg-[#c9c8c8] dark:text-[#E5E7EB] dark:bg-[#3e3d3f]"
                   }  dark:hover:bg-[#3e3d3f] group`}
                 >

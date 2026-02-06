@@ -1,11 +1,11 @@
 "use client";
 
-import AlertComponent from "@/components/AlertComponent";
 // import LoadingPage from "@/components/LoadingPage";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import LoadingPage from "./LoadingPage";
 import Image from "next/image";
+import AlertComponent from "@/components/alertComponent";
 interface Author {
   name: string;
   id: string;
@@ -93,7 +93,7 @@ export default function Home() {
             posts.map((post: Post) => (
               <div
                 key={post.id}
-                className="bg-[#ffffff] dark:bg-[#111827] rounded-lg shadow-md p-6 flex flex-col gap-2 border border-gray-100"
+                className="bg-[#ffffff] dark:bg-[#111827] rounded-lg shadow-md p-6 flex flex-col gap-2"
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-500">
