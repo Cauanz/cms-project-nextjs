@@ -44,8 +44,6 @@ function classNames(...classes: number[] | string[]) {
 export default function Header() {
   const { user, isSignedIn } = useUser();
   const path = usePathname();
-  
-  console.log(path.split(" "))
 
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
   // TODO - AINDA TEM ALGUNS ELEMENTOS COM TEMA INCONSISTENTE
@@ -248,6 +246,8 @@ export default function Header() {
               </div> */}
             </div>
           </DisclosurePanel>
+          {/* MOBILE AREA */}
+          
         </Disclosure>
       </div>
     </>

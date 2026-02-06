@@ -113,50 +113,50 @@ export default function Dashboard() {
   return (
     <>
       <SideBar />
-      <main className="pt-16 sm:pl-64 p-5 w-full">
+      <main className="pt-16 p-5 sm:pt-16 sm:p-0 sm:pl-64 w-full">
         {/* SECTION DE MÉTRICAS */}
         <section>
-          <div className="cards flex justify-between">
-            <Card className="w-full max-w-sm bg-[#7C3AED]">
+            <div className="cards flex flex-col sm:flex-row gap-3 sm:gap-5 sm:justify-between sm:mt-3">
+            <Card className="w-full sm:max-w-sm bg-[#7C3AED]">
               <CardTitle className="flex items-center justify-center">
-                <h1 className="text-2xl">Your Posts</h1>
+              <h1 className="text-xl sm:text-2xl">Your Posts</h1>
               </CardTitle>
               <CardContent className="flex items-center justify-center">
-                <p className="text-7xl">{posts.length}</p>
+              <p className="text-5xl sm:text-7xl">{posts.length}</p>
               </CardContent>
             </Card>
 
-            <Card className="w-full max-w-sm bg-[#7C3AED]">
+            <Card className="w-full sm:max-w-sm bg-[#7C3AED]">
               <CardTitle className="flex items-center justify-center">
-                <h1 className="text-2xl">Total Posts</h1>
+              <h1 className="text-xl sm:text-2xl">Total Posts</h1>
               </CardTitle>
               <CardContent className="flex items-center justify-center">
-                <p className="text-7xl">{allposts.length}</p>
+              <p className="text-5xl sm:text-7xl">{allposts.length}</p>
               </CardContent>
             </Card>
 
-            <Card className="w-full max-w-sm bg-[#7C3AED]">
+            <Card className="w-full sm:max-w-sm bg-[#7C3AED]">
               <CardTitle className="flex items-center justify-center">
-                <h1 className="text-2xl">Total Likes</h1>
+              <h1 className="text-xl sm:text-2xl">Total Likes</h1>
               </CardTitle>
               <CardContent className="flex items-center justify-center">
-                <p className="text-7xl">
-                  {posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}
-                </p>
+              <p className="text-5xl sm:text-7xl">
+                {posts.reduce((acc, cur: Post) => acc + cur.likes, 0)}
+              </p>
               </CardContent>
             </Card>
-          </div>
+            </div>
         </section>
 
         {/* SECTION DE POSTS/GERENCIAMENTO */}
         <section>
           <div className="pt-16 w-full">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:p-6 p-3">
               {posts.map((post: Post) => (
                 <div
                   key={post.id}
-                  className="bg-white dark:bg-white/25 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+                  className="bg-white dark:bg-white/25 rounded-lg shadow-md sm:p-6 p-5 hover:shadow-lg transition-shadow"
                 >
                   <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-[#E5E7EB]">
                     {post.title}

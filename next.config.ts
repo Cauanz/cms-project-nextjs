@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       new URL("https://img.clerk.com/**"),
     ],
   },
+  devIndicators: false,
 };
 
 export default nextConfig;

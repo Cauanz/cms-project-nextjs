@@ -5,7 +5,7 @@ export default function SideBar() {
   const pathname = usePathname();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 hidden sm:block">
+    // <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 hidden sm:block">
 
       <aside
         id="default-sidebar"
@@ -85,6 +85,6 @@ export default function SideBar() {
           </ul>
         </div>
       </aside>
-    </div>
+    // </div>
   );
 }
