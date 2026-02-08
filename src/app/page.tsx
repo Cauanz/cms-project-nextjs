@@ -81,7 +81,6 @@ export default function Home() {
           <AlertComponent
             title={alertTitle}
             description={alertDescription}
-            closeAlert={setIsAlertOpen}
           />
         )}
         <div className="feed flex flex-col gap-6 mt-12 w-full max-w-xl">

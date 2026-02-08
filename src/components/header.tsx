@@ -46,7 +46,6 @@ export default function Header() {
   const path = usePathname();
 
   // TODO - ADICIONAR PARA CLICAR FORA DO MENU MOBILE E FECHAR
-  // TODO - AINDA TEM ALGUNS ELEMENTOS COM TEMA INCONSISTENTE
 
   const navigation = isSignedIn ? navigation1 : navigation2;
 
@@ -110,14 +109,14 @@ export default function Header() {
                         <ul className="flex flex-row items-center gap-2 h-full">
                           <li>
                             <SignInButton>
-                              <button className="border border-[#b3b3b3] bg-[#17074D] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] dark:hover:bg-[#b3b3b3] dark:hover:text-[#17074D] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
+                              <button className="bg-[#17074D] text-[#E5E7EB] dark:bg-[#c9c8c8] dark:text-[#111827] hover:bg-[#b3b3b3] hover:text-[#111827] dark:hover:bg-[#b3b3b3] dark:hover:text-[#17074D] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
                                 Log in
                               </button>
                             </SignInButton>
                           </li>
                           <li>
                             <SignUpButton>
-                              <button className="border border-[#b3b3b3] bg-[#E5E7EB] text-[#17074D] dark:bg-[#232136] dark:text-[#E5E7EB] hover:bg-[#b3b3b3] hover:text-[#17074D] dark:hover:bg-[#b3b3b3] dark:hover:text-[#232136] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
+                              <button className="bg-[#E5E7EB] text-[#17074D] dark:bg-[#232136] dark:text-[#E5E7EB] hover:bg-[#b3b3b3] hover:text-[#17074D] dark:hover:bg-[#b3b3b3] dark:hover:text-[#232136] rounded-lg px-4 py-1.5 cursor-pointer h-9 flex items-center text-sm font-medium shadow-sm transition-colors">
                                 Sign Up
                               </button>
                             </SignUpButton>
